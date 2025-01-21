@@ -1,0 +1,26 @@
+/* *{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+} */
+.add-noteBtn{
+    position: relative;
+    margin: 0 5px;
+    border-radius: 5px;
+    font-size: 1rem;
+    border: none;
+    font-family:'Bitter', sans-serif;
+    padding: 5px 10px;
+    color: black;
+    transition-timing-function: ease-out;
+    transition-duration: 0.2s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #3898ec;
+}
+.add-noteBtn:hover{
+    transform: scale(1.1);
+    border: 1px solid #3898ec;
+}

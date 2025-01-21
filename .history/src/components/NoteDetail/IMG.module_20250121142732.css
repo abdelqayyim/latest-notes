@@ -1,0 +1,22 @@
+.parent{
+    position: relative;
+}
+.btn{
+    position: absolute;
+    display: flex;
+    right: 0;
+}
+.btn > div{
+    background-color:transparent;
+    margin-right: 10px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    z-index: 10;
+}
+
+.btn > div:hover{
+    background-color: rgba(0, 0, 0, 0.2);
+    cursor: pointer;

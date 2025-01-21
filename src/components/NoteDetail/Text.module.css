@@ -1,0 +1,85 @@
+.parent{
+    width:100%;
+    margin-bottom: 10px;
+    padding: 5px;
+    margin-bottom: 10px;
+    caret-color: black !important;
+    position: relative;
+}
+.textArea, .highlighter{
+    
+}
+.textArea{
+    width:100%;
+    background-color:transparent;
+    position: relative;
+    /* height: fit-content; */
+    padding-top: 7px;
+    padding-left: 26px;
+    outline: none;
+    border: none;
+    overflow-x: auto;
+    resize: vertical;
+    resize: none;
+    background-color: white;
+}
+.textArea.quote{
+    /* padding-left: 33px; */
+}
+.highlighter{
+    width:100%;
+    pointer-events: none;
+    background-color: green;
+}
+.highlighter:hover{
+    transform: scale(1.2);
+    
+}
+.highlighter::-webkit-scrollbar {
+   display: none;
+}
+
+.extras{
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    right: 0;
+}
+.extras > div{
+    background-color:transparent;
+    margin-right: 10px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    z-index: 10;
+}
+.extras > div:hover{
+    background-color: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+/* .overlay{
+    position: absolute;
+    background-color:purple;
+    width: 100%;
+} */
+.syntax{
+    user-select: none ; /* Disable text selection */
+  cursor: default; /* Set default cursor */
+  pointer-events: none; /* Disable pointer events */
+  cursor: default;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  pointer-events: none;
+  caret-color: transparent;
+}
+.textUpBtn{
+    margin-right: 5px;
+}
+.textUpBtn:hover{
+    cursor: pointer;
+    background-color: rgb(234, 232, 232);
+}

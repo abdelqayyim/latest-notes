@@ -1,0 +1,102 @@
+.note-contianer:hover{
+    cursor: pointer;
+}
+.note-info{
+    position: relative;
+    color: white;
+    height: 200px;
+    width: 210px;
+    background-color:rgb(16,16,16);
+    box-sizing: border-box;
+    margin: 0 30px 20px 0;
+    border-radius:5px;
+    border: 1px solid rgb(39,121,167);
+    
+    -webkit-box-shadow: 0px 0px 5px -2px #000000; 
+box-shadow: 0px 0px 5px -2px #000000;
+    display: flex;
+    flex-direction: column;
+}
+.note-info:hover{
+    cursor: pointer;
+    border: 1px solid green;
+}
+.note-info.dark{
+    color: white;
+}
+.note-title{
+    font-family: 'Rubik', sans-serif;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-left: 5px;
+    height: 20px;
+    font-weight:bold;
+    overflow: hidden;
+    display: -webkit-box; 
+            -webkit-box-orient: vertical; 
+            -webkit-line-clamp: 1;
+}
+.custom-bullet{
+    display: inline-block;
+            width: 7px; /* Adjust the size of the bullet as needed */
+            height: 7px;
+            background-color: #007bff; /* Change the color of the bullet */
+            border-radius: 50%; /* Makes it a circle */
+            margin-right: 5px; 
+}
+.note-description{
+  font-family: 'Rubik', sans-serif;
+  margin-left: 5px;
+  flex: 1;
+  display: -webkit-box; 
+          -webkit-box-orient: vertical; 
+          -webkit-line-clamp: 8;
+  line-height: 1.28rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.delete{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transition-timing-function: ease-out;
+    transition-duration: 0.2s;
+    border-radius: 50%;
+    padding: 5px;
+}
+.delete:hover{
+    transform: scale(1.1);
+    color: red;
+}
+.myHR{
+    color: black;
+    width: 90%;
+    align-self: center;
+    height: 1px;
+    border: 0.5px solid rgba(244, 242, 242, 0.867);
+}
+.note-info:hover .myHR{
+    border: 1px solid #3898ec;
+}
+
+@media screen and (max-width: 480px) {
+    .note-info{
+        max-width: 150px;
+        min-height: 150px;
+    }
+    .note-title{
+        font-size: 0.6rem;
+        overflow:hidden;
+  line-height: 1.5rem;
+  max-height: 8rem;
+  -webkit-box-orient: vertical;
+  display: block;
+  display: -webkit-box;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1
+    }
+    .note-description{
+        font-size: 0.4rem;
+    }
+}

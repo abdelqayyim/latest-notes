@@ -1,0 +1,53 @@
+.mainDiv{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color:rgba(0,0,0,0.5);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+.container{
+    width: 300px;
+    height: 150px;
+    background-color: black;
+    border-radius: 5px;
+}
+.title{
+    height: 40%;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.btns{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    height: 60%;
+    
+}
+.btns > div{
+    width: 40%;
+    height: 50%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    background-color: grey;
+}
+.cancel:hover{
+    background-color: red;
+}
+.confirm:hover{
+    background-color: green;
+}
