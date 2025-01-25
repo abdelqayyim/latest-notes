@@ -1,0 +1,96 @@
+.login-container {
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    background-color: rgb(44,38,56);
+    color: white;
+}
+
+.sign-in-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.sign-in-form {
+    width: 70%;
+    position: relative;
+}
+
+.sign-in-form > div:nth-of-type(2) {
+    margin-bottom: 30px;
+}
+
+.sign-in-form-details {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.sign-in-user-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+/* Ensures the last two text fields span the entire width */
+.sign-in-form-details > .MuiTextField-root {
+    grid-column: span 2;
+}
+
+/* Makes the button span the entire width of its parent */
+.sign-in-form > Button {
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* New section for the line with text */
+.line-with-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 20px 0;
+    position: relative;
+}
+
+.line-with-text span {
+    color: white;
+    font-weight: 300;
+    font-size: 12px;
+    letter-spacing: 0.2rem;
+    text-transform: uppercase;
+    line-height: 1em;
+    display: inline-block;
+    padding: 0 10px; /* Adjust this to control space between the lines */
+}
+
+/* Styling for the lines */
+.line {
+    flex-grow: 1; /* This makes the lines stretch to fill available space */
+    height: 1px;
+    background-color: white; /* Line color */
+    margin: 0 5px; /* Spacing between the text and the lines */
+}
+
+.company-logo-container{
+    width: 100%;
+    display:flex;
+    align-items: center;
+    justify-content: space-between
+    
+}
+.company-logo-div{
+    display: flex;
+    flex-direction:row;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid white;
+    width: 45%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius:10px
+}

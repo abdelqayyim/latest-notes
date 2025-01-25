@@ -1,8 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit';
-import appReducer from './slice';
+import { configureStore } from "@reduxjs/toolkit";
+import appReducer from "./dataSlice";
+import authReducer from "./authSlice";
 
 export default configureStore({
   reducer: {
-    languages: appReducer
-  }
-})
+    languages: appReducer,
+    authentication: authReducer,
+  },
+});

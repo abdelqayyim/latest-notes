@@ -1,7 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import styles from "./styles/Sidebar.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { setCurrentLanguage, setCurrentNotes, setCurrentForm, FORMS } from "../redux/slice";
+import {
+  setCurrentLanguage,
+  setCurrentNotes,
+  setCurrentForm,
+  FORMS,
+} from "../redux/dataSlice";
 import { useNavigate, Link } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import InputPopUp from "../components/PopUps/InputPopUp";
@@ -143,22 +148,22 @@ const Sidebar = (props) => {
                   href="#"
                   onClick={(e) => {
                     e.preventDefault();
-                    dispatch(setCurrentForm(FORMS.CREATE_COURSE))
+                    dispatch(setCurrentForm(FORMS.CREATE_COURSE));
                   }}
                 >
                   Course
                 </a>
               </li>
               <li>
-                    <a
-                        href="#"
-                        onClick={(e) => {
-                        e.preventDefault();
-                        dispatch(setCurrentForm(FORMS.CREATE_NOTE))
-                        }}
-                    >
-                        Note
-                    </a>
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    dispatch(setCurrentForm(FORMS.CREATE_NOTE));
+                  }}
+                >
+                  Note
+                </a>
               </li>
             </div>
           </ul>

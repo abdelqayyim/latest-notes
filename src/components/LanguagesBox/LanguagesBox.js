@@ -10,11 +10,11 @@ import {
   setCurrentLanguage,
   setSpinnerMessage,
   setErrorMessage,
-  setlanguagesList
-} from "../../redux/slice";
-import { LOADING_STATE } from "../../redux/slice";
+  setlanguagesList,
+} from "../../redux/dataSlice";
+import { LOADING_STATE } from "../../redux/dataSlice";
 import InputPopUp from "../PopUps/InputPopUp";
-import LanguageServices from '../../LanguageServices';
+import LanguageServices from "../../LanguageServices";
 
 const LanguagesBox = (props) => {
   const URL = "https://fequentquestionsserver.vercel.app/languages";
@@ -25,18 +25,15 @@ const LanguagesBox = (props) => {
   const isOverlayActive = useSelector((state) => state.languages.inputPopup);
   const [mode, setMode] = useState(""); //this is for whether a language is being added or deleted
   let popupActive = state.inputPopup;
-  const currentLanguages = useSelector((state) => state.languages.languagesList);
+  const currentLanguages = useSelector(
+    (state) => state.languages.languagesList
+  );
   const [currList, setCurrList] = useState(currentLanguages);
 
-
-  
   function toTitleCase(str) {
-    return str.replace(
-      /\w\S*/g,
-      function(txt) {
-        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-      }
-    );
+    return str.replace(/\w\S*/g, function (txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
   }
 
   const languageButtonHandler = (id) => {
@@ -47,7 +44,8 @@ const LanguagesBox = (props) => {
     setMode(newMode); // for input or deletion of language
   };
 
-  if (currList.length > 0) { // add a second option
+  if (currList.length > 0) {
+    // add a second option
     return (
       <div
         className={`${styles["top-div"]} ${
@@ -60,7 +58,7 @@ const LanguagesBox = (props) => {
           </div>
         )}
         <div className={`${styles["languages-box"]}`}>
-        {[...currList].reverse().map((language) => {
+          {[...currList].reverse().map((language) => {
             return (
               <LanguageFolder
                 name={toTitleCase(language.name)}

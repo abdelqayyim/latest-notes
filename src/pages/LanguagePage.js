@@ -24,8 +24,8 @@ import {
   setErrorMessage,
   setPageNotFound,
   setCurrentForm,
-  FORMS
-} from "../redux/slice";
+  FORMS,
+} from "../redux/dataSlice";
 import { Row } from "react-bootstrap";
 import LanguageServices from "../LanguageServices";
 import NotFound from "./NotFound";
@@ -91,7 +91,11 @@ const LanguagePage = () => {
   }
 
   const actions = [
-    { icon: <AddIcon />, name: "Add", action: () => dispatch(setCurrentForm(FORMS.CREATE_NOTE))},
+    {
+      icon: <AddIcon />,
+      name: "Add",
+      action: () => dispatch(setCurrentForm(FORMS.CREATE_NOTE)),
+    },
     { icon: <FileCopyIcon />, name: "Copy" },
     { icon: <SaveIcon />, name: "Save" },
     { icon: <PrintIcon />, name: "Print" },
