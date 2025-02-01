@@ -83,6 +83,9 @@
     justify-content: space-between
     
 }
+.company-logo-div:hover{
+    cursor: pointer;
+}
 .company-logo-div{
     display: flex;
     flex-direction:row;
@@ -92,5 +95,9 @@
     width: 45%;
     padding-top: 10px;
     padding-bottom: 10px;
-    border-radius:10px
+    border-radius:10px;
+    position: relative;
+}
+.company-logo-div:hover{
+    background-color:  rgb(60,54,76);
 }

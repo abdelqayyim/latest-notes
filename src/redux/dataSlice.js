@@ -5,14 +5,14 @@ export const LOADING_STATE = { IDLE: "idle", LOADING: "laoding", SUCCEEDED: "suc
 export const FORMS = { // For forms and confirmations
     CREATE_COURSE: "create course", // The creates can also be used for edits
     CREATE_NOTE: "create note",
-    WARNIGN: "warning", // To Show warnings/confirmations to the user
+    WARNING: "warning", // To Show warnings/confirmations to the user
 }
 
 //NOTE: with normal redux, unable to make async calls so will use middledware reduc-thunk
 
 
-export const appSlice = createSlice({
-  name: 'counter',
+export const dataSlice = createSlice({
+  name: 'data',
     initialState: {
         value: [],
         languagesList: [], // [{_id:, name}]
@@ -403,5 +403,5 @@ const deleteLanguage = createAsyncThunk(
 
 // Action creators are generated for each case reducer function
 export { fetchLanguages, addLanguage,deleteLanguage, addNote,deleteNote, getNotes, saveNote };
-export const { setCurrentForm, setPageNotFound, updateNoteObject, setCurrentNotes, setlanguagesList, setErrorMessage, setSpinnerMessage, setValue, setCurrentLanguage, togglePopup, resetError, setCurrentNote,takingNote, addText,viewingNotes,addImage,updateNote, getCurrentNote } = appSlice.actions;
-export default appSlice.reducer;
+export const { setCurrentForm, setPageNotFound, updateNoteObject, setCurrentNotes, setlanguagesList, setErrorMessage, setSpinnerMessage, setValue, setCurrentLanguage, togglePopup, resetError, setCurrentNote,takingNote, addText,viewingNotes,addImage,updateNote, getCurrentNote } = dataSlice.actions;
+export default dataSlice.reducer;

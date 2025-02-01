@@ -12,12 +12,14 @@
     width: 100%; /* Ensure it spans the full width of its container */
     color: white;
   }
-    .languages-box {
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive columns */
-      gap: 16px;
-    }
+  .languages-box {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;  /* Allows wrapping when the view shrinks */
+    gap: 10px;  /* Adds spacing between folders */
+    justify-content: flex-start; /* Aligns items from left to right */
+    align-items: flex-start; /* Aligns items at the start of the container */
+  }
     .languages-box::-webkit-scrollbar {
       display: none;
     }

@@ -63,7 +63,27 @@ const LanguageServices = {
             throw error;
         }
     },
-    
+    addNewCourse: async (requestBody) => {
+        try {
+            // Ensure the required field is present
+            if (!requestBody.name) {
+                throw new Error("Missing required field: title");
+            }
+            // Set the headers for JSON content
+            const headers = {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            };
+            // Make the POST request
+            const response = await axios.post(`${URL}addNewCourse`, requestBody, { headers });
+
+            // Return the newly created course data
+            return response.data;
+        } catch (error) {
+            console.error('Error Creating New Note', error);
+            throw error;
+        }
+    },
     
     addNewNote: async (body) => {
         try {

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { FORMS, setCurrentForm } from "../../redux/dataSlice";
 import CreateCourseForm from "./CreateCourseForm";
 import CreateNoteForm from "./CreateNoteForm";
+import Confirmation from "../PopUps/Confirmation";
 const FormsContainer = () => {
   const dispatch = useDispatch();
   const currentForm = useSelector((state) => state.languages.currentForm);

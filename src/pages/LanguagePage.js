@@ -115,11 +115,6 @@ const LanguagePage = () => {
       }}
     >
       <Outlet />
-      {/* <CreateNoteForm
-        isOpen={openForm}
-        handleClose={() => setOpenForm(false)}
-        refetch={fetchData}
-      /> */}
       <Row
         style={{
           width: "100%",

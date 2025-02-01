@@ -57,53 +57,8 @@ const Confirmation = ({ open, isOverlayVisible, onClose, text, onConfirm }) => {
     const handleConfirmAction = () => {
         console.log("Hello");
     }
-    return (
-
-        // <div style={{ 
-        //     position: "fixed",
-        //     top: "0",
-        //     left: "0",
-        //     width: "100%",
-        //     height: "100%",
-        //     background: "rgba(0, 0, 0, 0.1)",
-        //     display: "flex",
-        //     justifyContent: "center",
-        //     alignItems: "center",
-        //     zIndex: "10",
-        // }}
-        //     onClick={()=>{onClose()}}
-        // >
-        //     <div style={{...style, backgroundColor: option.warning.divColor}} onClick={(e)=>e.stopPropagation()}>
-        //         <div style={{display:"flex", flexDirection:"row"}}>
-        //             <div>
-        //                 {option.warning.logo}
-        //             </div>
-        //             <div style={{flexGrow: "1", display:"flex", flexDirection: "column", marginLeft:"10px"}}>
-        //                 <div style={{ color: option.warning.textColor, marginBottom:"10px", fontFamily:"Roboto", fontSize:"20px", fontWeight:"500", lineHeight:"24px" }}>Warning</div>
-        //                 <div style={{color: option.warning.textColor, flexGrow: "1", fontFamily:"Roboto", fontSize:"16px", fontWeight:"400", lineHeight:"24px"}}>
-        //                     {text}
-        //                 </div>
-        //             </div>
-                    
-        //         </div>
-        //         <div style={{display:"flex", justifyContent:"flex-end", height: "40px", marginTop:"10px"}}>
-        //             {/* <Button color="error" style={{marginRight:"10px"}} onClick={()=>{}}>Cancel</Button>
-        //             <Button disabled={false} variant="contained" color="success" onClick={() => { }}>Create</Button> */}
-
-        //             {option.warning.buttons.map((button, index)=>{
-        //                 if(button.color === 'error'){
-        //                     return <Button key={index} color="error" style={{marginRight:"10px"}} onClick={()=>button.onAction()}>Cancel</Button>
-        //                 }else{
-        //                     return <Button key={index} disabled={false} variant="contained" color={button.color} onClick={()=>button.onAction()}>Create</Button>
-        //                 }
-                        
-        //             })}
-        //       </div>
-        //     </div>
-        // </div>
-        
+    return (        
         <Overlay isVisible={open} onClose={onClose} isOverlayVisible={isOverlayVisible}>
-            {/* <div>{text}</div> */}
             <div style={{...style, backgroundColor: option.warning.divColor}} onClick={(e)=>e.stopPropagation()}>
                 <div style={{display:"flex", flexDirection:"row"}}>
                     <div>
@@ -118,16 +73,12 @@ const Confirmation = ({ open, isOverlayVisible, onClose, text, onConfirm }) => {
                     
                 </div>
                 <div style={{display:"flex", justifyContent:"flex-end", height: "40px", marginTop:"10px"}}>
-                    {/* <Button color="error" style={{marginRight:"10px"}} onClick={()=>{}}>Cancel</Button>
-                    <Button disabled={false} variant="contained" color="success" onClick={() => { }}>Create</Button> */}
-
                     {option.warning.buttons.map((button, index)=>{
                         if(button.color === 'error'){
                             return <Button key={index} color="error" style={{marginRight:"10px"}} onClick={()=>button.onAction()}>Cancel</Button>
                         }else{
-                            return <Button key={index} disabled={false} variant="contained" color={button.color} onClick={()=>button.onAction()}>Create</Button>
+                            return <Button key={index} disabled={false} variant="contained" color={button.color} onClick={()=>button.onAction()}>Delete</Button>
                         }
-                        
                     })}
               </div>
             </div>

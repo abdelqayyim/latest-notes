@@ -6,22 +6,23 @@ import LanguagePage from './pages/LanguagePage';
 import NotePage from './pages/NotePage';
 import NotFound from './pages/NotFound';
 import LoginPage from './pages/LoginPage';
+import { useSelector } from 'react-redux';
+import Layout from './pages/Layout';
+import PrivateRoute from './pages/PrivateRoute';
+
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   return (
-    <AppProvider> {/* Wrap the app with AppProvider */}
-      <Router>
+    <Router>
         <Routes>
-          {/* <Route path="/" element={<Layout />}> */}
-          <Route path="/" element={ isAuthenticated? <Home/> : <LoginPage />}>
-            <Route index element={<Home />} /> {/* Default page */}
-            <Route path=":language" element={<LanguagePage />}/>
-            <Route path=":language/:note" element={<NotePage />} />
-          </Route>
+          <Route path="/" element={<Layout />}>
+            <Route index element={ <PrivateRoute><Home /></PrivateRoute>} /> 
+            <Route path=":language" element={ <PrivateRoute><LanguagePage /></PrivateRoute>}/>
+            <Route path=":language/:note" element={<PrivateRoute><NotePage /></PrivateRoute>} />
+        </Route>
+          <Route path="/login" element={<LoginPage/>} />
           <Route path="*" element={<NotFound page="Page" redirect="/" />} />
         </Routes>
       </Router>
-    </AppProvider>
   );
 }
 

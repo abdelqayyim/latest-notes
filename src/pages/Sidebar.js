@@ -11,6 +11,8 @@ import { useNavigate, Link } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import InputPopUp from "../components/PopUps/InputPopUp";
 import { addIcon } from "../IconsSVG/IconSVG";
+import Icons from '../pages/icons/Icons';
+import { logout } from '../redux/authSlice';
 
 const Sidebar = (props) => {
   // before the sidebar languages are display, the data is already fetched no need to do it again
@@ -163,6 +165,40 @@ const Sidebar = (props) => {
                   }}
                 >
                   Note
+                </a>
+              </li>
+            </div>
+          </ul>
+        </li>
+
+        <li>
+          <button className={styles["dropdown-btn"]} onClick={toggleSubMenu}>
+            {Icons.ACCOUNT_ICON}
+            <span>Account</span>
+            {Icons.ARROW_DOWN}
+          </button>
+          <ul className={styles["sub-menu"]}>
+            <div>
+              <li>
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    // dispatch(setCurrentForm(FORMS.CREATE_COURSE));
+                  }}
+                >
+                  Settings
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    dispatch(logout());
+                  }}
+                >
+                  Logout
                 </a>
               </li>
             </div>

@@ -14,7 +14,7 @@ import LanguageFolder from "../components/LanguagesBox/LanguageFolder";
 import styles from "./styles/Home.module.css";
 
 import LanguagesBox from "../components/LanguagesBox/LanguagesBox";
-import { useParams } from "react-router-dom"; // React Router's useParams hook
+import { useParam, Outlet } from "react-router-dom"; // React Router's useParams hook
 import LanguageServices from "../LanguageServices";
 
 export default function Home() {
@@ -52,6 +52,9 @@ export default function Home() {
   useEffect(() => {
     fetchData();
   }, [dispatch]);
+  useEffect(() => {
+    setCurrList(currentLanguages);
+  }, [currentLanguages]);
 
   if (active) {
     return <Spinner />;
@@ -75,6 +78,7 @@ export default function Home() {
         alignItems: "center",
       }}
     >
+      
       {
         <div className={styles["typewriter"]}>
           <h1>My Notes</h1>
@@ -88,7 +92,9 @@ export default function Home() {
               name={toTitleCase(language.name)}
               id={language._id}
               key={language._id}
-              onClick={() => languageButtonHandler(language._id)}
+              // onClick={() => languageButtonHandler(language._id)}
+              onClick={() => console.log("clicked")}
+              refetch={() => fetchData()}
             />
           );
         })}

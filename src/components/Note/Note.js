@@ -13,6 +13,7 @@ import { Row } from "react-bootstrap";
 import MoreButton from "../MoreButton/MoreButton";
 import Confirmation from "../PopUps/Confirmation";
 import LanguageServices from "../../LanguageServices";
+import Icons from '../../pages/icons/Icons';
 
 const Note = (props) => {
   const URL = "https://fair-teal-gharial-coat.cyclic.app/languages/";
@@ -23,6 +24,7 @@ const Note = (props) => {
   const currentLanguageID = useSelector(
     (state) => state.languages.currentLanguageID
   );
+  const user = useSelector((state)=>state.authentication)
   const { language } = useParams();
   const [activeConfirmation, setActiveConfirmation] = useState(false);
   let note = {
@@ -290,10 +292,14 @@ const Note = (props) => {
           alignItems: "center",
         }}
       >
-        {/* <div>
-          LGOG
-        </div> */}
-        <div style={{ fontSize: "16px", fontWeight: "bold" }}>Abdel</div>
+        <div style={{fill:"white"}}>
+          {Icons.ACCOUNT_ICON}
+          
+        </div>
+        <div style={{ fontSize: "16px", fontWeight: "bold" }}>{user.firstName}</div>
+        
+          
+        {/* <div style={{ fontSize: "16px", fontWeight: "bold" }}>{user.firstName}</div> */}
 
         <MoreButton menuItems={noteMenuItems} />
       </Row>

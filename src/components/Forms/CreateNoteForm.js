@@ -10,6 +10,8 @@ import { clearAllListeners } from "@reduxjs/toolkit";
 import LanguageServices from "../../LanguageServices";
 import { useSelector, useDispatch } from "react-redux";
 import Overlay from "../Overlay/Overlay";
+import CustomDropdown from "../DropDown/CustomDropdown";
+import { useLocation } from "react-router-dom";
 
 // Define the style for the Box component if it's missing
 const style = {
@@ -27,8 +29,13 @@ const CreateNoteForm = ({ open, onClose, refetch }) => {
   const currentLanguageID = useSelector(
     (state) => state.languages.currentLanguageID
   );
+  const location = useLocation();
+  const currentPage = location.pathname;
+  console.log("currentPage", currentPage);
+  console.log("currentPage === /", currentPage === "/");
   const [newNote, setNewNote] = useState({ title: "", description: "" });
   const [formIsInvalid, setFormIsInvalid] = useState(true);
+  const [destinationRepository, setDestinationRepository] = useState(undefined);
   const handleCreateNote = async () => {
     const response = await LanguageServices.addNewNote({
       language_id: currentLanguageID,
@@ -50,70 +57,21 @@ const CreateNoteForm = ({ open, onClose, refetch }) => {
     }
   }, [newNote]);
 
+  useEffect(() => {
+    console.log(`destinationRepository`,destinationRepository);
+  }, [destinationRepository]);
+
+  const dropDownOptions = [
+    { displayName: "One", registerName: "One", onSelect: () => { setDestinationRepository("One") } },
+    { displayName: "Two", registerName: "Two", onSelect: () => { setDestinationRepository("Two") } },
+    { displayName: "Three", registerName: "Three", onSelect: () => {setDestinationRepository("Three") } },
+  ]
+
   return (
-    // <Modal
-    //   open={open}
-    //   onClose={handleClose}
-    //   aria-labelledby="modal-modal-title"
-    //   aria-describedby="modal-modal-description"
-    // >
-    //   <Box sx={style} component={"form"}>
-    //     <Container>
-    //       <Typography id="modal-modal-title" variant="h6" component="h2">
-    //         Create A New Note
-    //       </Typography>
-
-    //       <TextField
-    //         fullWidth
-    //         required
-    //         placeholder="Enter Title"
-    //         margin="normal"
-    //         id="note-form-title"
-    //         label="Title"
-    //         value={newNote.title}
-    //         onChange={(event) =>
-    //           setNewNote((prev) => ({ ...prev, title: event.target.value }))
-    //         }
-    //       />
-    //       <TextField
-    //         fullWidth
-    //         multiline
-    //         margin="normal"
-    //         id="note-form-description"
-    //         label="Description"
-    //         value={newNote.description}
-    //         onChange={(event) =>
-    //           setNewNote((prev) => ({
-    //             ...prev,
-    //             description: event.target.value,
-    //           }))
-    //         }
-    //       />
-    //     </Container>
-    //     <div style={{ display: "flex", justifyContent: "flex-end" }}>
-    //       <Button
-    //         color="error"
-    //         style={{ marginRight: "10px" }}
-    //         onClick={() => handleClose()}
-    //       >
-    //         Cancel
-    //       </Button>
-    //       <Button
-    //         disabled={formIsInvalid}
-    //         variant="contained"
-    //         color="success"
-    //         onClick={handleCreateNote}
-    //       >
-    //         Create
-    //       </Button>
-    //     </div>
-    //   </Box>
-    // </Modal>
-
     <Overlay isVisible={open} isOverlayVisible={true} onClose={onClose}>
       <Box sx={style} component={"form"}>
         <Container>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+          <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ color: 'black' }}>
             Create A New Note
           </Typography>
 
@@ -143,6 +101,9 @@ const CreateNoteForm = ({ open, onClose, refetch }) => {
               }))
             }
           />
+
+          <CustomDropdown options={dropDownOptions} />
+
         </Container>
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <Button

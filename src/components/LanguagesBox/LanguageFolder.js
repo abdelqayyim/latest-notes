@@ -42,9 +42,13 @@ const LanguageFolder = (props) => {
   };
 
   const handleDeleteLanguage = async () => {
-    console.log("Should delete language", props);
-    const response = await LanguageServices.deleteLanguage(props.id);
-    console.log("response", response);
+    try {
+      const response = await LanguageServices.deleteLanguage(props.id);
+      await props.refetch();
+      setOpenDelete(false);
+    } catch (error) {
+      throw new Error(error.message);
+    }
   };
 
   return (
