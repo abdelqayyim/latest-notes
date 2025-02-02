@@ -31,11 +31,28 @@ const CreateNoteForm = ({ open, onClose, refetch }) => {
   );
   const location = useLocation();
   const currentPage = location.pathname;
-  console.log("currentPage", currentPage);
-  console.log("currentPage === /", currentPage === "/");
+  
   const [newNote, setNewNote] = useState({ title: "", description: "" });
   const [formIsInvalid, setFormIsInvalid] = useState(true);
   const [destinationRepository, setDestinationRepository] = useState(undefined);
+  const [dropDownOptions, setDropDownOptions] = useState([]);
+  const languagesList = useSelector(state => state.languages.languagesList);
+  
+  useEffect(() => {
+    if (currentPage === "/") {
+      const tempOption = languagesList.map(item => ({
+        displayName: item.name,
+        registerName: item.name.toLowerCase().replace(/\s+/g, '_'),
+        onSelect: () => { setDestinationRepository(item._id) }
+      }));
+      setDropDownOptions(tempOption);
+    }
+  }, [currentPage, languagesList]);
+
+  useEffect(() => {
+    console.log(`destinationRepository`,destinationRepository);
+  }, [destinationRepository])
+  
   const handleCreateNote = async () => {
     const response = await LanguageServices.addNewNote({
       language_id: currentLanguageID,
@@ -43,8 +60,7 @@ const CreateNoteForm = ({ open, onClose, refetch }) => {
       description: newNote.description,
       note_detail: [],
     });
-    console.log("response", response);
-    if (response.status >= 200) {
+    if (response.status >= 200 && !(currentPage === "/")) {
       refetch();
     }
   };
@@ -56,16 +72,6 @@ const CreateNoteForm = ({ open, onClose, refetch }) => {
       setFormIsInvalid(true);
     }
   }, [newNote]);
-
-  useEffect(() => {
-    console.log(`destinationRepository`,destinationRepository);
-  }, [destinationRepository]);
-
-  const dropDownOptions = [
-    { displayName: "One", registerName: "One", onSelect: () => { setDestinationRepository("One") } },
-    { displayName: "Two", registerName: "Two", onSelect: () => { setDestinationRepository("Two") } },
-    { displayName: "Three", registerName: "Three", onSelect: () => {setDestinationRepository("Three") } },
-  ]
 
   return (
     <Overlay isVisible={open} isOverlayVisible={true} onClose={onClose}>
@@ -102,7 +108,7 @@ const CreateNoteForm = ({ open, onClose, refetch }) => {
             }
           />
 
-          <CustomDropdown options={dropDownOptions} />
+          {currentPage === "/" && <CustomDropdown options={dropDownOptions} />}
 
         </Container>
         <div style={{ display: "flex", justifyContent: "flex-end" }}>

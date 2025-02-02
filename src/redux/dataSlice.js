@@ -19,6 +19,7 @@ export const dataSlice = createSlice({
         currentLanguageID: undefined,
         currentNote: { _id: null, title: null, description: null, noteDetail: null },
         currentNotes: [],
+        languageDetails: {notes:[], name:undefined, logo:undefined},
         loading: LOADING_STATE.IDLE,
         errorMessage: "",// for bottom popUp
         errorSign: "", // for bottom popUp
@@ -51,7 +52,10 @@ export const dataSlice = createSlice({
         },
         setCurrentLanguage: (state, action) => {
             state.currentLanguageID = action.payload;
-        }, 
+        },
+        setLanguageDetails: (state, action) => {
+            state.languageDetails = action.payload
+        },
         setCurrentNotes: (state, action) => {
             state.currentNotes = [...action.payload];
         },
@@ -403,5 +407,5 @@ const deleteLanguage = createAsyncThunk(
 
 // Action creators are generated for each case reducer function
 export { fetchLanguages, addLanguage,deleteLanguage, addNote,deleteNote, getNotes, saveNote };
-export const { setCurrentForm, setPageNotFound, updateNoteObject, setCurrentNotes, setlanguagesList, setErrorMessage, setSpinnerMessage, setValue, setCurrentLanguage, togglePopup, resetError, setCurrentNote,takingNote, addText,viewingNotes,addImage,updateNote, getCurrentNote } = dataSlice.actions;
+export const { setLanguageDetails, setCurrentForm, setPageNotFound, updateNoteObject, setCurrentNotes, setlanguagesList, setErrorMessage, setSpinnerMessage, setValue, setCurrentLanguage, togglePopup, resetError, setCurrentNote,takingNote, addText,viewingNotes,addImage,updateNote, getCurrentNote } = dataSlice.actions;
 export default dataSlice.reducer;

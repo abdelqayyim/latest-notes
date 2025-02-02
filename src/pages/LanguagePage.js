@@ -25,6 +25,7 @@ import {
   setPageNotFound,
   setCurrentForm,
   FORMS,
+  setLanguageDetails
 } from "../redux/dataSlice";
 import { Row } from "react-bootstrap";
 import LanguageServices from "../LanguageServices";
@@ -40,9 +41,13 @@ const LanguagePage = () => {
   const message = useSelector((state) => state.languages.spinnerMessage);
   const active = message !== "";
 
-  const [noteEntity, setNoteEntity] = useState(
-    useSelector((state) => state.languages.currentNote)
-  );
+  const languageDetails = useSelector((state) => state.languages.languageDetails);
+  const [noteEntity, setNoteEntity] = useState(languageDetails);
+
+  useEffect(() => {
+    setNoteEntity(languageDetails);
+  }, [languageDetails]);  
+
   // const [openForm, setOpenForm] = useState(false);
   const pageNotFound = useSelector((state) => state.languages.pageNotFound);
 
@@ -58,7 +63,8 @@ const LanguagePage = () => {
         // Fetch by name
         data = await LanguageServices.searchLanguageByName(language);
       }
-      setNoteEntity(data);
+      dispatch(setLanguageDetails(data));
+      dispatch(setCurrentLanguage(data._id));
       // return data;
     } catch (error) {
       dispatch(setErrorMessage({ message: `${error}`, sign: "negative" }));

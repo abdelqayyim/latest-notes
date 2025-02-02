@@ -245,7 +245,7 @@ const Note = (props) => {
     }
   };
   let noteMenuItems = [
-    { child: "Edit", onAction: () => handleEditNote() },
+    { child: "Edit", onAction: () => { handleEditNote() } },
     {
       child: "Delete",
       onAction: () => {
