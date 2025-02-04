@@ -45,7 +45,9 @@ export default function Home() {
       return data;
     } catch (error) {
       dispatch(setErrorMessage({ message: `${error}`, sign: "negative" }));
-      throw error;
+      // throw error;
+    } finally {
+      dispatch(setSpinnerMessage(""));
     }
   };
 
