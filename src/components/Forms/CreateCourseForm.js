@@ -38,8 +38,7 @@ const CreateCourseForm = ({ open, onClose }) => {
       const data = await LanguageServices.getAllLanguages();
       setCurrList(data);
       dispatch(setSpinnerMessage(""));
-      let formattedData = data.map((obj) => ({ _id: obj._id, name: obj.name }));
-      dispatch(setlanguagesList(formattedData));
+      dispatch(setlanguagesList(data));
       dispatch(setValue(data));
       return data;
     } catch (error) {
