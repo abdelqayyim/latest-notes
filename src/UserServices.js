@@ -1,3 +1,4 @@
+import { userApi } from './APIClient';
 import axios from 'axios';
 const URL = "https://fequentquestionsserver.vercel.app/user/"
 // const URL = "http://localhost:8000/user/";
@@ -8,7 +9,7 @@ const UserServices = {
         // Handle traditional login and then one with google
         let body = { firstName, lastName, username, password, userId, email, profilePicture };
         try {
-            const response = await axios.post(URL + "register",body, {
+            const response = await userApi.post(URL + "register",body, {
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -22,7 +23,7 @@ const UserServices = {
     checkUser: async ({ userId }) => {
         let body = { userId };
         try {
-            const response = await axios.post(URL + "checkUser",body, {
+            const response = await userApi.post(URL + "checkUser",body, {
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -36,7 +37,7 @@ const UserServices = {
     login: async ({ username, password }) => {
         let body = { username, password };
         try {
-            const response = await axios.post(URL + "login/username-password",body, {
+            const response = await userApi.post(URL + "login/username-password",body, {
                 headers: {
                     'Content-Type': 'application/json'
                 },

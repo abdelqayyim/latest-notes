@@ -38,8 +38,8 @@ const LanguagePage = () => {
     (state) => state.languages.currentLanguageID
   );
   const { language } = useParams();
-  const message = useSelector((state) => state.languages.spinnerMessage);
-  const active = message !== "";
+  // const message = useSelector((state) => state.languages.spinnerMessage);
+  // const active = message !== "";
 
   const languageDetails = useSelector((state) => state.languages.languageDetails);
   const [noteEntity, setNoteEntity] = useState(languageDetails);
@@ -52,7 +52,7 @@ const LanguagePage = () => {
   const pageNotFound = useSelector((state) => state.languages.pageNotFound);
 
   const fetchData = async () => {
-    dispatch(setSpinnerMessage("Loading Language"));
+    dispatch(setSpinnerMessage("Loading Notes"));
     // setOpenForm(false);
     let data;
     try {
@@ -92,9 +92,9 @@ const LanguagePage = () => {
     dispatch(togglePopup());
   };
 
-  if (active) {
-    return <Spinner />;
-  }
+  // if (active) {
+  //   return <Spinner />;
+  // }
 
   const actions = [
     {

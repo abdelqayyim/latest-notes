@@ -9,7 +9,9 @@ import { useSelector } from "react-redux";
 const Message = (props) => {
   const message = useSelector((state) => state.languages.spinnerMessage);
   let active = message !== "";
-
+  if (!active) {
+    return <></>
+  }
   return ReactDOM.createPortal(
     <div className={`${styles.overlay} ${styles.active}`}>
       <div className={ styles["loader-popup"]}>

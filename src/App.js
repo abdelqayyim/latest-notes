@@ -9,16 +9,16 @@ import LoginPage from './pages/LoginPage';
 import { useSelector } from 'react-redux';
 import Layout from './pages/Layout';
 import PrivateRoute from './pages/PrivateRoute';
+import Spinner from './components/Spinner/Spinner';
 
 function App() {
+  const message = useSelector((state) => state.languages.spinnerMessage);
+  let active = message !== "";
   return (
     <Router>
-      <PrivateRoute>
-        
-      </PrivateRoute>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={ <PrivateRoute><Home /></PrivateRoute>} /> 
+            <Route index element={<PrivateRoute><Home /></PrivateRoute> } /> 
             <Route path=":language" element={ <PrivateRoute><LanguagePage /></PrivateRoute>}/>
             <Route path=":language/:note" element={<PrivateRoute><NotePage /></PrivateRoute>} />
         </Route>

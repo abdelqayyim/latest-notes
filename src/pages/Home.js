@@ -129,8 +129,8 @@ const handleMenuClose = () => {
   const paginationModel = { page: 0, pageSize: 5 };
 
   // This is the home page
-  const message = useSelector((state) => state.languages.spinnerMessage);
-  let active = message !== "";
+  // const message = useSelector((state) => state.languages.spinnerMessage);
+  // let active = message !== "";
 
   const fetchData = async () => {
     dispatch(setSpinnerMessage("Loading Language"));
@@ -170,9 +170,9 @@ const handleMenuClose = () => {
     })));
   }, [currentLanguages]);
 
-  if (active) {
-    return <Spinner />;
-  }
+  // if (active) {
+  //   return <Spinner />;
+  // }
 
   const toTitleCase = (str) => {
     return str.replace(/\w\S*/g, function (txt) {

@@ -28,14 +28,14 @@ const NotePage = (props) => {
   // const noteId = props.match.params.note; // Access route params from props
   // const paramLanguageName = props.match.params.language;
 
-  const message = useSelector((state) => state.languages.spinnerMessage);
-  const active = message !== "";
+  // const message = useSelector((state) => state.languages.spinnerMessage);
+  // const active = message !== "";
 
   useEffect(() => {
     if (!languageName) {
       // If the value is not already loaded
       const fetchData = async () => {
-        dispatch(setSpinnerMessage("Loading Note"));
+        dispatch(setSpinnerMessage("Loading Details"));
         try {
           const data = await LanguageServices.getNoteByLanguageName(
             paramLanguageName,
@@ -60,9 +60,9 @@ const NotePage = (props) => {
     }
   }, [languageName, paramLanguageName, noteId, dispatch]);
 
-  if (active) {
-    return <Spinner />;
-  }
+  // if (active) {
+  //   return <Spinner />;
+  // }
 
   return (
     <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>

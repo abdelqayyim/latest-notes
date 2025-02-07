@@ -16,6 +16,7 @@ export const authSlice = createSlice({
   },
   reducers: {
     setState: (state, action) => {
+      console.log("setting state", action.payload.isAuthenticated);
       const { firstName, lastName, username, email, isAdmin, userId, accessToken, refreshToken, profilePicture, isAuthenticated } = action.payload;
       state.firstName = firstName;
       state.lastName = lastName;
@@ -26,7 +27,7 @@ export const authSlice = createSlice({
       state.accessToken = accessToken;
       state.refreshToken = refreshToken;
       state.profilePicture = profilePicture;
-      state.isAuthenticated = isAuthenticated
+      state.isAuthenticated = true
     },
     setIsAuthenticated: (state, action) => {
       state.isAuthenticated = action.payload;
@@ -47,8 +48,8 @@ export const authSlice = createSlice({
 
       // handle removale/deletion of session related data
       localStorage.removeItem("reactNotes-accessToken");
-    localStorage.removeItem("reactNotes-refreshToken");
-    localStorage.removeItem("reactNotes-user");
+      localStorage.removeItem("reactNotes-refreshToken");
+      localStorage.removeItem("reactNotes-user");
     },
   }
 

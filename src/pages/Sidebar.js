@@ -204,6 +204,7 @@ const Sidebar = (props) => {
                   href="#"
                   onClick={(e) => {
                     e.preventDefault();
+                    console.log("Logout is being called");
                     dispatch(logout());
                   }}
                 >
