@@ -151,7 +151,15 @@ const LanguagePage = () => {
         }}
       >
         {!noteEntity.notes || noteEntity?.notes.length === 0 ? (
-          <>No notes added</>
+          <div style={{display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+            width: "100%",
+            fontSize: "1.5rem",
+            fontWeight: "bold",}}>
+            <p>No notes created</p>
+          </div>
         ) : (
           [...noteEntity?.notes]
             .reverse()

@@ -47,7 +47,7 @@ const Text = forwardRef(({ detail, index, removeElement, moveElement }, ref) => 
     }
 
   return (
-    <div style={{ position: "relative", overflow: "visible", borderRadius: "10px", backgroundColor: "#EFEDED", paddingLeft: "5px", paddingBottom: "10px", flexGrow: "1", marginTop: "10px" }}>
+    <div style={{ position: "relative", overflow: "visible", borderRadius: "10px", backgroundColor: "#1A1911", paddingLeft: "5px", paddingBottom: "10px", flexGrow: "1", marginTop: "10px" }}>
       <div style={{ height: "25px", display: "flex", justifyContent: "space-between", paddingRight: "5px"}}>
         <CloseIcon onClick={() => removeElement(index)} />
 

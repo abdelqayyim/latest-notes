@@ -14,6 +14,7 @@ import {
   setlanguagesList,
   setCurrentNotes,
 } from "../../redux/dataSlice";
+import { Tooltip } from "@mui/material";
 
 const LanguageFolder = (props) => {
   const navigate = useNavigate(); // Use useNavigate instead of useRouter
@@ -59,6 +60,8 @@ const LanguageFolder = (props) => {
       >
         <div className={styles["back-folder-part"]}></div>
         <div className={styles["main-folder-part"]}>
+         
+          <Tooltip title={"Delete"} placement="right">
           <div
             className={styles["delete-div"]}
             onClick={(event) => {
@@ -68,6 +71,7 @@ const LanguageFolder = (props) => {
           >
             <DeleteIcon />
           </div>
+          </Tooltip>
           {props.name}
         </div>
       </div>

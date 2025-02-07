@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './MoreButton.module.css';
 import Overlay from '../Overlay/Overlay';
+import { Tooltip } from '@mui/material';
 
-const MoreButton = ({ menuItems }) => {
+const MoreButton = ({ menuItems, tooltipTitle, placement }) => {
   const [openOptions, setOpenOptions] = useState(false);
   const [buttonPosition, setButtonPosition] = useState({ top: 0, left: 0 });
   const buttonRef = useRef(null); // Reference to the "More" button
@@ -29,9 +30,12 @@ const MoreButton = ({ menuItems }) => {
 
   return (
     <div className={styles.moreButtonParentDiv}>
-      <div ref={buttonRef} onClick={() => setOpenOptions(prev => !prev)}>
-        <span className="material-symbols-outlined">more_vert</span>
-      </div>
+      <Tooltip title={tooltipTitle} placement={placement}>
+        <div ref={buttonRef} onClick={() => setOpenOptions(prev => !prev)}>
+          <span className="material-symbols-outlined">more_vert</span>
+        </div>
+      </Tooltip>
+      
       
       {openOptions && (
         <Overlay isVisible={openOptions} onClose={handleOverlayClose}>

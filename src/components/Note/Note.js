@@ -14,6 +14,7 @@ import MoreButton from "../MoreButton/MoreButton";
 import Confirmation from "../PopUps/Confirmation";
 import LanguageServices from "../../LanguageServices";
 import Icons from '../../pages/icons/Icons';
+import Avatar from 'react-avatar';
 
 const Note = (props) => {
   const URL = "https://fair-teal-gharial-coat.cyclic.app/languages/";
@@ -292,16 +293,19 @@ const Note = (props) => {
           alignItems: "center",
         }}
       >
-        <div style={{fill:"white"}}>
-          {Icons.ACCOUNT_ICON}
-          
+        <div style={{fill:"white", marginRight:"5px"}}>
+          {/* {Icons.ACCOUNT_ICON} */}
+          <Avatar name={user.firstName} size="30" round={true} />
+
         </div>
         <div style={{ fontSize: "16px", fontWeight: "bold" }}>{user.firstName}</div>
         
           
         {/* <div style={{ fontSize: "16px", fontWeight: "bold" }}>{user.firstName}</div> */}
 
-        <MoreButton menuItems={noteMenuItems} />
+        
+        <MoreButton menuItems={noteMenuItems} tooltipTitle={"More" } placement={"right"} />
+
       </Row>
       <Row
         onClick={() => {

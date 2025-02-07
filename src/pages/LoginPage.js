@@ -8,6 +8,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { GoogleLogin, googleLogout, useGoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
 import UserServices from '../UserServices';
+import { setSpinnerMessage } from '../redux/dataSlice';
 
 
 const LoginPage = (props) => {
@@ -67,6 +68,7 @@ const LoginPage = (props) => {
             const accessToken = tokenResponse.access_token;
 
             try {
+                dispatch(setSpinnerMessage("Logging User"));
                 // 2. Fetch user info from Google using the access token
                 const userInfoResponse = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
                     method: 'GET',
@@ -118,6 +120,8 @@ const LoginPage = (props) => {
                 
             } catch (error) {
                 console.error('Error fetching user info:', error);
+            } finally {
+                dispatch(setSpinnerMessage(""));
             }
         },
     });
@@ -201,9 +205,9 @@ const LoginPage = (props) => {
         }
     return (
         <div className={styles["login-container"]}>
-            <div style={{backgroundColor:"blue"}}>
+            {/* <div style={{backgroundColor:"blue"}}>
                 Hello
-            </div>
+            </div> */}
 
             <div className={styles["sign-in-container"]}>
                 <div className={styles["sign-in-form"]}>
@@ -240,7 +244,6 @@ const LoginPage = (props) => {
                             <span style={{marginLeft:"10px"}}>Apple</span>
                         </div>
                     </div>
-
                     <Button variant="contained" onClick={creatingNewAccount ? handleCreateAccount: handleLogin} sx={buttonStyle}>{ creatingNewAccount? "Create Account" : "Login"}</Button>
                 </div>
             </div>

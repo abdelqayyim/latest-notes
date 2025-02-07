@@ -2,7 +2,8 @@ import axios from "axios";
 import store from "./redux/store"; // Import Redux store
 import { jwtDecode } from "jwt-decode";
 import { setUserTokens, logout } from "./redux/authSlice";
-const URL = "http://localhost:8000/";
+const URL = "https://fequentquestionsserver.vercel.app/"
+// const URL = "http://localhost:8000/languages/";
 
 // Create API client without token (for user-related requests)
 export const userApi = axios.create({

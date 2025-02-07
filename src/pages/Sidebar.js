@@ -13,21 +13,19 @@ import InputPopUp from "../components/PopUps/InputPopUp";
 import { addIcon } from "../IconsSVG/IconSVG";
 import Icons from '../pages/icons/Icons';
 import { logout } from '../redux/authSlice';
+import Tooltip from '@mui/material/Tooltip';
 
 const Sidebar = (props) => {
   // before the sidebar languages are display, the data is already fetched no need to do it again
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const languages = useSelector((state) => state.languages.value);
-  const currentLanguageID = useSelector(
-    (state) => state.languages.currentLanguageID
-  );
-  const currentLanguageName = useSelector(
-    (state) => state.languages.currentLanguageID
-  );
+  const currentLanguageID = useSelector((state) => state.languages.currentLanguageID);
+  const currentLanguageName = useSelector((state) => state.languages.currentLanguageID);
   const currentNotes = useSelector((state) => state.languages.currentNotes);
   const sidebar = useRef();
   const toggleBtn = useRef();
+  const [sideBarOpen, setSidebarOpen] = useState(false);
 
   const languageOnClick = (id, name) => {
     //make sure youre at the right page
@@ -63,6 +61,7 @@ const Sidebar = (props) => {
     }
   };
   const toggleSideBar = () => {
+    setSidebarOpen(prev => !prev);
     const side = sidebar.current;
     const toggle = toggleBtn.current;
     side.classList.toggle(styles.close);
@@ -90,6 +89,7 @@ const Sidebar = (props) => {
       <ul>
         <li>
           <span className={styles.logo}>LOGO</span>
+          <Tooltip title={sideBarOpen?"Close":"Open"} placement="right">
           <button
             className={`${styles["toggle-btn"]} ${styles["rotate"]}`}
             onClick={toggleSideBar}
@@ -105,23 +105,28 @@ const Sidebar = (props) => {
               <path d="M440-240 200-480l240-240 56 56-183 184 183 184-56 56Zm264 0L464-480l240-240 56 56-183 184 183 184-56 56Z" />
             </svg>
           </button>
+          </Tooltip>
         </li>
 
         <li className={styles["active"]}>
-          <Link to="/">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="24px"
-              viewBox="0 -960 960 960"
-              width="24px"
-              fill="#5f6368"
-            >
-              <path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z" />
-            </svg>
-            <span>Home</span>
-          </Link>
+          
+          <Tooltip title={sideBarOpen?"":"Home"} placement={"right"}>
+            <Link to="/">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24px"
+                viewBox="0 -960 960 960"
+                width="24px"
+                fill="#5f6368"
+              >
+                <path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z" />
+              </svg>
+              <span>Home</span>
+            </Link>
+          </Tooltip>
         </li>
         <li>
+          <Tooltip title={sideBarOpen?"":"Create"} placement="right">
           <button className={styles["dropdown-btn"]} onClick={toggleSubMenu}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -143,6 +148,8 @@ const Sidebar = (props) => {
               <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
             </svg>
           </button>
+          </Tooltip>
+          
           <ul className={styles["sub-menu"]}>
             <div>
               <li>
@@ -172,11 +179,13 @@ const Sidebar = (props) => {
         </li>
 
         <li>
-          <button className={styles["dropdown-btn"]} onClick={toggleSubMenu}>
-            {Icons.ACCOUNT_ICON}
-            <span>Account</span>
-            {Icons.ARROW_DOWN}
-          </button>
+          <Tooltip title={sideBarOpen? "":"Account"} placement="right">
+            <button className={styles["dropdown-btn"]} onClick={toggleSubMenu}>
+              {Icons.ACCOUNT_ICON}
+              <span>Account</span>
+              {Icons.ARROW_DOWN}
+            </button>
+          </Tooltip>
           <ul className={styles["sub-menu"]}>
             <div>
               <li>

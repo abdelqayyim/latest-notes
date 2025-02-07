@@ -33,7 +33,7 @@ export default function Home() {
     (state) => state.languages.languagesList
   );
   const [currList, setCurrList] = useState(currentLanguages);
-  const [isTableView, setIsTableView] = useState(false);
+  const [isTableView, setIsTableView] = useState(true);
   const [rows, setRows] = useState([]);
   const [openDelete, setOpenDelete] = useState(false);
   const [selectedRow, setSelectedRow] = useState(undefined);
@@ -204,7 +204,18 @@ const handleMenuClose = () => {
       }
 
       <div className={`${styles["languages-box"]}`}>
-        {isTableView ? 
+        {
+          currList.length === 0 ? (
+            <div style={{display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100%",
+              width: "100%",
+              fontSize: "1.5rem",
+              fontWeight: "bold",}}>
+              <p>No courses created</p>
+            </div>
+          ) : isTableView ? 
           [...currList].reverse().map((language) => {
             return (
               <LanguageFolder

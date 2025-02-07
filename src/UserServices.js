@@ -1,6 +1,6 @@
 import axios from 'axios';
-// const URL = "https://fequentquestionsserver.vercel.app/user/";
-const URL = "http://localhost:8000/user/";
+const URL = "https://fequentquestionsserver.vercel.app/user/"
+// const URL = "http://localhost:8000/user/";
 
 
 const UserServices = {
