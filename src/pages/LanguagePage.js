@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams, Outlet } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Note from "../components/Note/Note";
-import Box from "@mui/material/Box";
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
@@ -11,15 +10,9 @@ import SaveIcon from "@mui/icons-material/Save";
 import PrintIcon from "@mui/icons-material/Print";
 import ShareIcon from "@mui/icons-material/Share";
 import AddIcon from "@mui/icons-material/Add";
-import CreateNoteForm from "../components/Forms/CreateNoteForm";
-import Spinner from "../components/Spinner/Spinner";
-import { useNavigate } from "react-router-dom";
+
 import {
-  setValue,
-  setlanguagesList,
   setCurrentLanguage,
-  setCurrentNotes,
-  togglePopup,
   setSpinnerMessage,
   setErrorMessage,
   setPageNotFound,
@@ -33,34 +26,23 @@ import NotFound from "./NotFound";
 
 const LanguagePage = () => {
   const dispatch = useDispatch();
-  // const allData = useSelector(undefined);
-  const selectedLanguageID = useSelector(
-    (state) => state.languages.currentLanguageID
-  );
+  const selectedLanguageID = useSelector((state) => state.languages.currentLanguageID);
   const { language } = useParams();
-  // const message = useSelector((state) => state.languages.spinnerMessage);
-  // const active = message !== "";
-
   const languageDetails = useSelector((state) => state.languages.languageDetails);
   const [noteEntity, setNoteEntity] = useState(languageDetails);
+  const pageNotFound = useSelector((state) => state.languages.pageNotFound);
 
   useEffect(() => {
     setNoteEntity(languageDetails);
   }, [languageDetails]);  
 
-  // const [openForm, setOpenForm] = useState(false);
-  const pageNotFound = useSelector((state) => state.languages.pageNotFound);
-
   const fetchData = async () => {
     dispatch(setSpinnerMessage("Loading Notes"));
-    // setOpenForm(false);
     let data;
     try {
       if (selectedLanguageID) {
         data = await LanguageServices.getLanguageDetails(selectedLanguageID);
       } else {
-        // Search the database using the name in the url parameter
-        // Fetch by name
         data = await LanguageServices.searchLanguageByName(language);
       }
       dispatch(setLanguageDetails(data));
@@ -87,14 +69,6 @@ const LanguagePage = () => {
   useEffect(() => {
     fetchData();
   }, [dispatch]);
-
-  const addNoteHandler = () => {
-    dispatch(togglePopup());
-  };
-
-  // if (active) {
-  //   return <Spinner />;
-  // }
 
   const actions = [
     {
@@ -137,7 +111,6 @@ const LanguagePage = () => {
             {toTitleCase(noteEntity?.name)}
           </div>
         )}
-        {/* <span className="material-symbols-outlined">tune</span> */}
       </Row>
       <Row
         style={{

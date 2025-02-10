@@ -11,7 +11,6 @@ const PrivateRoute = ({ children }) => {
 
     useEffect(() => {
         setIsAuthenticated(authenticationStatus);
-        console.log("It has changed", authenticationStatus);
     }, [authenticationStatus]);
 
     useEffect(() => {
@@ -37,9 +36,6 @@ const PrivateRoute = ({ children }) => {
     const user = useSelector((state) => state.authentication);
     let location = useLocation();
 
-    // if(!user.isAuthenticated) {
-    //     return <Navigate to="/login" state={{ from: location}} replace />
-    // }
     // Redirect authenticated users away from /login
     if (user.isAuthenticated && location.pathname === "/login") {
         return <Navigate to="/" replace />;

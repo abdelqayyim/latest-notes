@@ -49,7 +49,7 @@ const Text = forwardRef(({ detail, index, removeElement, moveElement }, ref) => 
   return (
     <div style={{ position: "relative", overflow: "visible", borderRadius: "10px", backgroundColor: "#1A1911", paddingLeft: "5px", paddingBottom: "10px", flexGrow: "1", marginTop: "10px" }}>
       <div style={{ height: "25px", display: "flex", justifyContent: "space-between", paddingRight: "5px"}}>
-        <CloseIcon onClick={() => removeElement(index)} />
+        <CloseIcon onClick={() => removeElement(index)} style={{cursor:"pointer"}} />
 
         <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent: "center"}}>
           {index != 0 && <div onMouseDown={moveHandler} className={styles.textUpBtn}><span class="material-symbols-outlined">expand_less</span></div>}

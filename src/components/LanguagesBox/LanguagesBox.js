@@ -17,8 +17,6 @@ import InputPopUp from "../PopUps/InputPopUp";
 import LanguageServices from "../../LanguageServices";
 
 const LanguagesBox = (props) => {
-  const URL = "https://fequentquestionsserver.vercel.app/languages";
-  // const URL = "http://localhost:8000/language/"
   let state = useSelector((state) => state.languages);
   const dispatch = useDispatch();
   const loadingState = state.loading;

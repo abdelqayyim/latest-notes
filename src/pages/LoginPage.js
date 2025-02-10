@@ -1,22 +1,22 @@
-import React, { useEffect, useState, useRef }  from 'react'; 
+import React, { useEffect, useState }  from 'react'; 
 import styles from './styles/LoginPage.module.css'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { setState } from '../redux/authSlice';
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from 'react-router-dom';
-import { GoogleLogin, googleLogout, useGoogleLogin } from '@react-oauth/google';
-import { jwtDecode } from 'jwt-decode';
+import { useGoogleLogin } from '@react-oauth/google';
 import UserServices from '../UserServices';
 import { setSpinnerMessage } from '../redux/dataSlice';
-
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
 
 const LoginPage = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    const googleBtn = useRef();
-    const state = useSelector((state) => state.authentication);
     const isAuthenticated = useSelector((state) => state.authentication?.isAuthenticated);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -25,17 +25,23 @@ const LoginPage = (props) => {
     const [email, setEmail] = useState('');
     const [creatingNewAccount, setCreatingNewAccount] = useState(false);
     const from = location.state?.from?.pathname || '/';
-
+    const [isValid, setIsValid] = useState(false);
+    const [showPassword, setShowPassword] = useState(false); // State for password visibility
     
     useEffect(() => {
         if (isAuthenticated) {
             navigate(from, { replace: true });
         }
     }, [isAuthenticated, navigate]);
+    // Function to toggle password visibility
+    const handleClickShowPassword = () => {
+        setShowPassword((prev) => !prev);
+    };
 
-    useEffect(() => {
-        console.log("It has changed in the LoginPage", isAuthenticated);
-    }, [isAuthenticated]);
+    // Prevent default behavior for mouse down on the eye icon
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
 
     useEffect(() => {
             const accessToken = localStorage.getItem("reactNotes-accessToken");
@@ -118,7 +124,6 @@ const LoginPage = (props) => {
         },
     });
 
-
     const handleCreateAccount = async () => {
         // dispatch(setIsAuthenticated(true))
         dispatch(setSpinnerMessage("Creating User"));
@@ -199,7 +204,30 @@ const LoginPage = (props) => {
         '&:hover': {
           backgroundColor: 'rgb(93, 70, 161)',  // Hover background color
         },
+    }
+    useEffect(() => {
+        checkFormInput();
+      }, [firstName, lastName, username, password, email, creatingNewAccount]);
+    const checkFormInput = () => {
+        if (creatingNewAccount) {
+          // Validate fields for creating a new account
+          const isFirstNameValid = firstName.trim() !== "";
+          const isLastNameValid = lastName.trim() !== "";
+          const isUsernameValid = username.trim() !== "";
+          const isPasswordValid = password.trim() !== "";
+          const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()); // Basic email validation
+      
+          // Enable the button only if all fields are valid
+          setIsValid(isFirstNameValid && isLastNameValid && isUsernameValid && isPasswordValid && isEmailValid);
+        } else {
+          // Validate fields for logging in
+          const isUsernameValid = username.trim() !== "";
+          const isPasswordValid = password.trim() !== "";
+      
+          // Enable the button only if both fields are valid
+          setIsValid(isUsernameValid && isPasswordValid);
         }
+      };
     return (
         <div className={styles["login-container"]}>
             {/* <div style={{backgroundColor:"blue"}}>
@@ -220,8 +248,30 @@ const LoginPage = (props) => {
                         }
                         
                         <TextField value={username} onChange={(e) => setUsername(e.target.value.trim())} id="outlined-basic" label="Username" variant="outlined" sx={textInputFieldStyle}/>
-                        <TextField value={password} onChange={(e) => setPassword(e.target.value.trim())}id="outlined-basic" label="Password" variant="outlined" type='password'sx={textInputFieldStyle}/>
-                        { creatingNewAccount &&  <TextField value={email} onChange={(e) => setEmail(e.target.value.trim())}id="outlined-basic" label="email" variant="outlined" type='password'sx={textInputFieldStyle}/>}
+                        <TextField
+              value={password}
+              onChange={(e) => setPassword(e.target.value.trim())}
+              id="outlined-basic"
+              label="Password"
+              variant="outlined"
+              type={showPassword ? 'text' : 'password'} // Toggle password visibility
+              sx={textInputFieldStyle}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff sx={{ color: 'white' }}/> : <Visibility sx={{ color: 'white' }}/>}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+                        { creatingNewAccount &&  <TextField value={email} onChange={(e) => setEmail(e.target.value.trim())}id="outlined-basic" label="email" variant="outlined" type='text'sx={textInputFieldStyle}/>}
                     </div>
 
                     
@@ -241,7 +291,7 @@ const LoginPage = (props) => {
                             <span style={{marginLeft:"10px"}}>Apple</span>
                         </div>
                     </div>
-                    <Button variant="contained" onClick={creatingNewAccount ? handleCreateAccount: handleLogin} sx={buttonStyle}>{ creatingNewAccount? "Create Account" : "Login"}</Button>
+                    <Button variant="contained" disabled={!isValid} onClick={creatingNewAccount ? handleCreateAccount: handleLogin} sx={buttonStyle}>{ creatingNewAccount? "Create Account" : "Login"}</Button>
                 </div>
             </div>
         </div>

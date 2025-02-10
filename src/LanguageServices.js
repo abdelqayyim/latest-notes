@@ -1,6 +1,4 @@
 import { languageApi } from "./APIClient";
-// const URL = "https://fequentquestionsserver.vercel.app/languages/";
-// const URL = "http://localhost:8000/languages/";
 
 const LanguageServices = {
   getAllLanguages: async () => {

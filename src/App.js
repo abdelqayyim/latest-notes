@@ -1,19 +1,14 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import AppProvider from './redux/AppProvider';
 import Home from './pages/Home';
 import LanguagePage from './pages/LanguagePage';
 import NotePage from './pages/NotePage';
 import NotFound from './pages/NotFound';
 import LoginPage from './pages/LoginPage';
-import { useSelector } from 'react-redux';
 import Layout from './pages/Layout';
 import PrivateRoute from './pages/PrivateRoute';
-import Spinner from './components/Spinner/Spinner';
 
 function App() {
-  const message = useSelector((state) => state.languages.spinnerMessage);
-  let active = message !== "";
   return (
     <Router>
         <Routes>

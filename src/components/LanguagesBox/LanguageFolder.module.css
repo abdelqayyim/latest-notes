@@ -2,9 +2,12 @@
     margin: 60px auto;
     position: relative;
     width: 200px;
+    transition-duration: 0.1s;
+    transition-timing-function: ease-in;
 }
 .folder-div:hover{
     cursor: pointer;
+    transform: scale(1.01);
 }
 .main-folder-part {
     background-image: linear-gradient(180deg, #72BAFB 0%, #347EE1 100%);
@@ -20,7 +23,7 @@
 }
 .main-folder-part:after {
     content:'';
-    box-shadow: 0 8px 8px 0 rgba(114,186,251,0.60);
+    /* box-shadow: 0 8px 8px 0 rgba(114,186,251,0.60); */
     border-radius: 10px;
     position: absolute;
     top: 0;

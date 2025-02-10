@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Spinner from "../components/Spinner/Spinner";
 import {
   setValue,
   setSpinnerMessage,
   setErrorMessage,
   setlanguagesList,
   setCurrentLanguage,
-  LOADING_STATE,
 } from "../redux/dataSlice";
-import InputPopUp from "../components/PopUps/InputPopUp";
 import LanguageFolder from "../components/LanguagesBox/LanguageFolder";
 import styles from "./styles/Home.module.css";
 import LanguageServices from "../LanguageServices";
@@ -24,14 +21,7 @@ import Confirmation from "../components/PopUps/Confirmation";
 export default function Home() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  let state = useSelector((state) => state.languages);
-  const loadingState = state.loading;
-  const isOverlayActive = useSelector((state) => state.languages.inputPopup);
-  const [mode, setMode] = useState(""); //this is for whether a language is being added or deleted
-  let popupActive = state.inputPopup;
-  const currentLanguages = useSelector(
-    (state) => state.languages.languagesList
-  );
+  const currentLanguages = useSelector((state) => state.languages.languagesList);
   const [currList, setCurrList] = useState(currentLanguages);
   const [isTableView, setIsTableView] = useState(true);
   const [rows, setRows] = useState([]);
@@ -39,7 +29,8 @@ export default function Home() {
   const [selectedRow, setSelectedRow] = useState(undefined);
 
   const [anchorEl, setAnchorEl] = useState(null);
-const [selectedId, setSelectedId] = useState(null);
+  const [selectedId, setSelectedId] = useState(null);
+  const isDataFetched = useRef(false); // Track if data has been fetched
 
 const handleMenuClick = (event, row) => {
   setAnchorEl(event.currentTarget);
@@ -68,31 +59,11 @@ const handleMenuClose = () => {
     }
   };
   
-
-  // const columns = [
-  //   { field: 'id', headerName: 'ID', width: 70 },
-  //   { field: 'firstName', headerName: 'First name', width: 130 },
-  //   { field: 'lastName', headerName: 'Last name', width: 130 },
-  //   {
-  //     field: 'age',
-  //     headerName: 'Age',
-  //     type: 'number',
-  //     width: 90,
-  //   },
-  //   {
-  //     field: 'fullName',
-  //     headerName: 'Full name',
-  //     description: 'This column has a value getter and is not sortable.',
-  //     sortable: false,
-  //     width: 160,
-  //     valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
-  //   },
-  // ];
   const columns = [
     // { field: 'id', headerName: 'ID', width: 10, hide: true },
-    { field: "title", headerName: 'Title', width: 150 },
-    { field: "owner", headerName: 'Owner', width: 150 },
-    { field: "lastEdited", headerName: 'Last Edited', width: 250 },
+    { field: "title", headerName: 'Title', width: 150,  headerClassName: "custom-header", },
+    { field: "owner", headerName: 'Owner', width: 150,  headerClassName: "custom-header", },
+    { field: "lastEdited", headerName: 'Last Edited', width: 250,  headerClassName: "custom-header", },
     {
       field: "actions",
       headerName: "",
@@ -128,34 +99,30 @@ const handleMenuClose = () => {
   ]
   const paginationModel = { page: 0, pageSize: 5 };
 
-  // This is the home page
-  // const message = useSelector((state) => state.languages.spinnerMessage);
-  // let active = message !== "";
-
   const fetchData = async () => {
     dispatch(setSpinnerMessage("Loading Language"));
     try {
       const data = await LanguageServices.getAllLanguages();
       setCurrList(data);
       dispatch(setSpinnerMessage(""));
-      // let formattedData = data.map((obj) => ({ _id: obj._id, name: obj.name }));
       dispatch(setlanguagesList(data));
       dispatch(setValue(data));
       return data;
     } catch (error) {
       dispatch(setErrorMessage({ message: `${error}`, sign: "negative" }));
-      // throw error;
     } finally {
       dispatch(setSpinnerMessage(""));
     }
   };
 
-
   useEffect(() => {
-    fetchData();
-  }, [dispatch]);
+    if (!isDataFetched.current) {
+      fetchData();
+      isDataFetched.current = true;
+    }
+  }, []);
   useEffect(() => {
-    setCurrList(currentLanguages);
+    // setCurrList(currentLanguages);
     setRows(prev => currentLanguages.map(language => ({
       id: language._id,
       title: language.name,
@@ -169,10 +136,6 @@ const handleMenuClose = () => {
     })
     })));
   }, [currentLanguages]);
-
-  // if (active) {
-  //   return <Spinner />;
-  // }
 
   const toTitleCase = (str) => {
     return str.replace(/\w\S*/g, function (txt) {
@@ -209,10 +172,11 @@ const handleMenuClose = () => {
             <div style={{display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              height: "100%",
+              height: "100vh",
               width: "100%",
               fontSize: "1.5rem",
-              fontWeight: "bold",}}>
+              fontWeight: "bold",          
+            }}>
               <p>No courses created</p>
             </div>
           ) : isTableView ? 
@@ -229,17 +193,45 @@ const handleMenuClose = () => {
             );
           })
         :
-        <Paper sx={{ height: 400, width: '100%' }}>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            initialState={{ pagination: { paginationModel } }}
-            pageSizeOptions={[5, 10]}
-                // checkboxSelection
-                onRowClick={(params) => clickHandler(params.id, params.row.title)}
-            sx={{ border: 0 }}
-          />
-        </Paper>
+          <Paper sx={{ height: 400, width: '100%', bgcolor: "#11121a", color: "white" }}>
+            <DataGrid
+              rows={rows}
+              columns={columns.map(col => ({ ...col, headerClassName: "custom-header" }))} // ✅ Apply globally
+              initialState={{ pagination: { paginationModel } }}
+              pageSizeOptions={[5, 10]}
+              onRowClick={(params) => clickHandler(params.id, params.row.title)}
+              sx={{
+                border: 0,
+                color: "white",
+                "& .MuiDataGrid-root": {
+                  backgroundColor: "#11121a",
+                  color: "white",
+                },
+                "& .MuiDataGrid-cell": {
+                  color: "white",
+                },
+                "& .MuiDataGrid-columnHeaders": {
+                  backgroundColor: "#222330", // ✅ Ensures full header row is styled
+                  color: "white",
+                  fontWeight: "bold",
+                },
+                "& .custom-header": {
+                  backgroundColor: "#222330",
+                  color: "white",
+                  fontWeight: "bold",
+                },
+                "& .MuiDataGrid-row": {
+                  backgroundColor: "#11121a",
+                },
+                "& .MuiDataGrid-row:hover": {
+                  backgroundColor: "#1b1c26",
+                },
+              }}
+            />
+          </Paper>
+
+
+
         
         }
       </div>

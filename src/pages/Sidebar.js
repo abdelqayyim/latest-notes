@@ -1,16 +1,11 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import styles from "./styles/Sidebar.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  setCurrentLanguage,
-  setCurrentNotes,
   setCurrentForm,
   FORMS,
 } from "../redux/dataSlice";
 import { useNavigate, Link } from "react-router-dom";
-import { Row, Col } from "react-bootstrap";
-import InputPopUp from "../components/PopUps/InputPopUp";
-import { addIcon } from "../IconsSVG/IconSVG";
 import Icons from '../pages/icons/Icons';
 import { logout } from '../redux/authSlice';
 import Tooltip from '@mui/material/Tooltip';
@@ -18,35 +13,9 @@ import Tooltip from '@mui/material/Tooltip';
 const Sidebar = (props) => {
   // before the sidebar languages are display, the data is already fetched no need to do it again
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const languages = useSelector((state) => state.languages.value);
-  const currentLanguageID = useSelector((state) => state.languages.currentLanguageID);
-  const currentLanguageName = useSelector((state) => state.languages.currentLanguageID);
-  const currentNotes = useSelector((state) => state.languages.currentNotes);
   const sidebar = useRef();
   const toggleBtn = useRef();
   const [sideBarOpen, setSidebarOpen] = useState(false);
-
-  const languageOnClick = (id, name) => {
-    //make sure youre at the right page
-    navigate(`/${name.replace(/\s/g, "")}`);
-    let newNotes = languages.filter((language) => {
-      if (language._id == id) {
-        return language.notes;
-      }
-    });
-    dispatch(setCurrentLanguage(id));
-    dispatch(setCurrentNotes(newNotes[0].notes));
-  };
-  function toTitleCase(str) {
-    return str.replace(/\w\S*/g, function (txt) {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    });
-  }
-
-  const handleCreateLanguage = () => {
-    console.log("Should create a new language");
-  };
 
   const toggleSubMenu = (event) => {
     const button = event.currentTarget;
@@ -204,7 +173,6 @@ const Sidebar = (props) => {
                   href="#"
                   onClick={(e) => {
                     e.preventDefault();
-                    console.log("Logout is being called");
                     dispatch(logout());
                   }}
                 >

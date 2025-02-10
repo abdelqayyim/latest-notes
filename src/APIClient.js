@@ -2,8 +2,21 @@ import axios from "axios";
 import store from "./redux/store"; // Import Redux store
 import { jwtDecode } from "jwt-decode";
 import { setUserTokens, logout } from "./redux/authSlice";
-const URL = "https://fequentquestionsserver.vercel.app/"
-// const URL = "http://localhost:8000/languages/";
+// const URL = "https://fequentquestionsserver.vercel.app/";
+const URL = "http://localhost:8000/";
+
+let isRefreshing = false;
+let refreshSubscribers = [];
+
+const subscribeTokenRefresh = (cb) => {
+  refreshSubscribers.push(cb);
+};
+
+const onRefreshed = (newAccessToken) => {
+  refreshSubscribers.map((cb) => cb(newAccessToken));
+  refreshSubscribers = [];
+};
+
 
 // Create API client without token (for user-related requests)
 export const userApi = axios.create({
@@ -41,40 +54,82 @@ const refreshAccessToken = async (refreshToken) => {
 };
 
 // Attach Authorization token only for language-related requests
+// languageApi.interceptors.request.use(
+//   async (config) => {
+//     const state = store.getState();
+//     const accessToken = state.authentication.accessToken;
+//     const refreshToken = state.authentication.refreshToken;
+//     const currentTime = Math.floor(Date.now() / 1000);
+
+//     if (accessToken) {
+//       try {
+//         const decodedAccessToken = jwtDecode(accessToken);
+//         const decodedRefreshToken = jwtDecode(refreshToken);
+
+//         if(currentTime >= decodedRefreshToken.exp){
+//           store.dispatch(logout());
+//         }
+
+//         // Check if the access token is expired
+//         if (currentTime >= decodedAccessToken.exp) {
+//           // If the token is expired, use the refresh token to get a new access token
+//           const newAccessToken = await refreshAccessToken(refreshToken);
+
+//           // Update the Authorization header with the new access token
+//           config.headers["Authorization"] = `Bearer ${newAccessToken}`;
+//         } else {
+//           // If the token is still valid, use it as is
+//           config.headers["Authorization"] = `Bearer ${accessToken}`;
+//         }
+//       } catch (error) {
+//         console.error("Error decoding access token or refreshing token", error);
+//         store.dispatch({ type: 'LOGOUT' });
+//         return Promise.reject(error);
+//       }
+//     }
+//     return config;
+//   },
+//   (error) => {
+//     return Promise.reject(error);
+//   }
+// );
 languageApi.interceptors.request.use(
   async (config) => {
     const state = store.getState();
-    const accessToken = state.authentication.accessToken;
-    const refreshToken = state.authentication.refreshToken;
+    let accessToken = state.authentication.accessToken;
+    let refreshToken = state.authentication.refreshToken;
     const currentTime = Math.floor(Date.now() / 1000);
 
     if (accessToken) {
       try {
         const decodedAccessToken = jwtDecode(accessToken);
-        const decodedRefreshToken = jwtDecode(refreshToken);
 
-        if(currentTime >= decodedRefreshToken.exp){
-          store.dispatch(logout());
-        }
-
-        // Check if the access token is expired
-        if (currentTime >= decodedAccessToken.exp) {
-          // If the token is expired, use the refresh token to get a new access token
-          const newAccessToken = await refreshAccessToken(refreshToken);
-
-          // Update the Authorization header with the new access token
-          config.headers["Authorization"] = `Bearer ${newAccessToken}`;
-        } else {
-          // If the token is still valid, use it as is
+        if (currentTime < decodedAccessToken.exp) {
           config.headers["Authorization"] = `Bearer ${accessToken}`;
+          return config;
         }
+
+        if (isRefreshing) {
+          return new Promise((resolve) => {
+            subscribeTokenRefresh((newAccessToken) => {
+              config.headers["Authorization"] = `Bearer ${newAccessToken}`;
+              resolve(config);
+            });
+          });
+        }
+
+        isRefreshing = true;
+        const newAccessToken = await refreshAccessToken(refreshToken);
+        store.dispatch(setUserTokens({ accessToken: newAccessToken, refreshToken }));
+        isRefreshing = false;
+
+        onRefreshed(newAccessToken);
+        config.headers["Authorization"] = `Bearer ${newAccessToken}`;
       } catch (error) {
-        console.error("Error decoding access token or refreshing token", error);
-        store.dispatch({ type: 'LOGOUT' });
+        store.dispatch(logout());
         return Promise.reject(error);
       }
     }
-
     return config;
   },
   (error) => {
