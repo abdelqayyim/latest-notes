@@ -1,11 +1,11 @@
 import React, { useState, useRef } from "react";
 import styles from "./styles/Sidebar.module.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   setCurrentForm,
   FORMS,
 } from "../redux/dataSlice";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Icons from '../pages/icons/Icons';
 import { logout } from '../redux/authSlice';
 import Tooltip from '@mui/material/Tooltip';

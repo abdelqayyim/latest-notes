@@ -1,39 +1,25 @@
-import React, { useState, useRef } from "react";
+import React, { useState} from "react";
 import styles from "./Note.module.css";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setCurrentNotes,
-  setErrorMessage,
-  setSpinnerMessage,
   setCurrentNote,
-  setValue,
 } from "../../redux/dataSlice";
 import { Row } from "react-bootstrap";
 import MoreButton from "../MoreButton/MoreButton";
 import Confirmation from "../PopUps/Confirmation";
 import LanguageServices from "../../LanguageServices";
-import Icons from '../../pages/icons/Icons';
 import Avatar from 'react-avatar';
 
 const Note = (props) => {
-  const URL = "https://fair-teal-gharial-coat.cyclic.app/languages/";
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const pathname = useLocation().pathname;
-  let globalValue = useSelector((state) => state.languages.value);
   const currentLanguageID = useSelector(
     (state) => state.languages.currentLanguageID
   );
   const user = useSelector((state)=>state.authentication)
   const { language } = useParams();
-  const [activeConfirmation, setActiveConfirmation] = useState(false);
-  let note = {
-    _id: props.id,
-    title: props.title,
-    description: props.description,
-    noteDetail: props.detail,
-  };
+
   const [openConfirmation, setOpenConfirmation] = useState(false);
   const [warningMessage, setWarningMessage] = useState("");
 
@@ -165,60 +151,6 @@ const Note = (props) => {
     19: "#8A2BE2",
   };
 
-  const deleteNoteHandler = async () => {
-    try {
-      dispatch(setSpinnerMessage("Deleting Note"));
-      const response = await fetch(URL + `${currentLanguageID}/deleteNote`, {
-        method: "DELETE",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(note),
-      });
-      const data = await response.json();
-      let newNotes = [...data.notes];
-      let tempVal = [...globalValue];
-      tempVal = globalValue.map((languageOBJ) => {
-        if (languageOBJ._id === currentLanguageID) {
-          return { ...languageOBJ, notes: [...newNotes] };
-        }
-        return languageOBJ;
-      });
-      dispatch(setValue(tempVal));
-      dispatch(setCurrentNotes(newNotes));
-      dispatch(
-        setErrorMessage({
-          message: "Note sucessfully Deleted",
-          sign: "positive",
-        })
-      );
-      dispatch(setSpinnerMessage(""));
-      return data;
-    } catch (error) {
-      dispatch(setErrorMessage({ message: `${error}`, sign: "negative" }));
-      dispatch(setSpinnerMessage(""));
-      throw error;
-    }
-  };
-  const responseHandler = (response) => {
-    setActiveConfirmation(false);
-    if (response == "yes") {
-      deleteNoteHandler();
-    }
-  };
-  // const curr = useContext(AppProvider);
-  const noteHandler = () => {
-    // set the current note in the global context
-    let note = {
-      _id: props.id,
-      title: props.title,
-      description: props.description,
-      noteDetail: props.detail,
-    };
-    dispatch(setCurrentNote(note));
-    navigate(`${language}/${props.id}`);
-  };
   const handleEditNote = () => {
     dispatch(
       setCurrentNote({
@@ -229,11 +161,11 @@ const Note = (props) => {
         noteDetail: props.noteDetail,
       })
     );
-    navigate(`/${language}/${props.id}`);
+    navigate(`/${encodeURIComponent(language)}/${props.id}`);
   };
   const handleDeleteNote = async () => {
     try {
-      const response = await LanguageServices.deleteNote({
+      await LanguageServices.deleteNote({
         note_id: props.id,
         language_id: currentLanguageID,
       });

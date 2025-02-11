@@ -20,7 +20,6 @@ const CreateCourseForm = ({ open, onClose }) => {
   const currentLanguages = useSelector(
     (state) => state.languages.languagesList
   );
-  const [currList, setCurrList] = useState(currentLanguages);
   const style = {
     position: "absolute",
     top: "50%",
@@ -36,7 +35,6 @@ const CreateCourseForm = ({ open, onClose }) => {
     dispatch(setSpinnerMessage("Loading Language"));
     try {
       const data = await LanguageServices.getAllLanguages();
-      setCurrList(data);
       dispatch(setSpinnerMessage(""));
       dispatch(setlanguagesList(data));
       dispatch(setValue(data));

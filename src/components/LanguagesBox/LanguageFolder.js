@@ -1,50 +1,32 @@
 import React, { useState } from "react";
 import styles from "./LanguageFolder.module.css";
 import { useNavigate } from "react-router-dom"; // Use useNavigate from react-router-dom
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import Confirmation from "../PopUps/Confirmation";
 import LanguageServices from "../../LanguageServices";
+import { customEncodeURI } from "../../utilFunctions";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
-  setValue,
   setCurrentLanguage,
-  setSpinnerMessage,
-  setErrorMessage,
-  setlanguagesList,
-  setCurrentNotes,
 } from "../../redux/dataSlice";
 import { Tooltip } from "@mui/material";
 
 const LanguageFolder = (props) => {
   const navigate = useNavigate(); // Use useNavigate instead of useRouter
   const dispatch = useDispatch();
-  const languages = useSelector((state) => state.languages.languagesList);
-  const currentNotes = useSelector((state) => state.languages.currentNotes);
-  const values = useSelector((state) => state.languages.value);
-  const [notes, setNotes] = useState(currentNotes);
-  let path = props.name.replace(/\s/g, "").toLowerCase();
+  let path = props.name.toLowerCase();
   const [openDelete, setOpenDelete] = useState(false);
 
-  // Find the ID based on the language name
-  const findID = () => {
-    let id = -1;
-    languages.forEach((lang) => {
-      if (lang.name.replace(/\s/g, "").toLowerCase() === path) {
-        id = lang._id;
-      }
-    });
-    return id;
-  };
 
   const clickHandler = (id) => {
     dispatch(setCurrentLanguage(id));
-    navigate(`/${path}`); // Use navigate instead of router.push
+    navigate(`/${customEncodeURI(path)}`); // Use navigate instead of router.push
   };
 
   const handleDeleteLanguage = async () => {
     try {
-      const response = await LanguageServices.deleteLanguage(props.id);
+      await LanguageServices.deleteLanguage(props.id);
       await props.refetch();
       setOpenDelete(false);
     } catch (error) {

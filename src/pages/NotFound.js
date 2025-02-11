@@ -3,7 +3,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { setPageNotFound } from "../redux/dataSlice";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 const NotFound = ({ page, redirect }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();

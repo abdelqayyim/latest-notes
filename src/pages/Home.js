@@ -38,20 +38,20 @@ const handleMenuClick = (event, row) => {
   setSelectedRow(row);
 };
 
-const handleMenuClose = () => {
-  setAnchorEl(null);
-  setSelectedId(null);
-};
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    setSelectedId(null);
+  };
 
   const clickHandler = (id, name) => {
     let path = name.replace(/\s/g, "").toLowerCase();
-      dispatch(setCurrentLanguage(id));
+    dispatch(setCurrentLanguage(id));
       navigate(`/${path}`); // Use navigate instead of router.push
   };
   const handleDeleteLanguage = async () => {
     try {
       console.log(`selectedRow`,selectedRow);
-      const response = await LanguageServices.deleteLanguage(selectedRow.id);
+      await LanguageServices.deleteLanguage(selectedRow.id);
       await fetchData();
       setOpenDelete(false);
     } catch (error) {
@@ -66,7 +66,7 @@ const handleMenuClose = () => {
     { field: "lastEdited", headerName: 'Last Edited', width: 250,  headerClassName: "custom-header", },
     {
       field: "actions",
-      headerName: "",
+      headerName: "More",
       width: 50,
       sortable: false,
       renderCell: (params) => (
@@ -117,12 +117,12 @@ const handleMenuClose = () => {
 
   useEffect(() => {
     if (!isDataFetched.current) {
-      fetchData();
+        fetchData();
       isDataFetched.current = true;
     }
   }, []);
   useEffect(() => {
-    // setCurrList(currentLanguages);
+    setCurrList(currentLanguages);
     setRows(prev => currentLanguages.map(language => ({
       id: language._id,
       title: language.name,
@@ -141,9 +141,6 @@ const handleMenuClose = () => {
     return str.replace(/\w\S*/g, function (txt) {
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
-  };
-  const languageButtonHandler = (id) => {
-    dispatch(setCurrentLanguage(id));
   };
 
   return (

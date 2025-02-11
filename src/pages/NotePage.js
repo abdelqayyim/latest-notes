@@ -50,7 +50,7 @@ const NotePage = (props) => {
       };
       fetchData();
     }
-  }, [languageName, paramLanguageName, noteId, dispatch]);
+  }, [languageName, paramLanguageName, noteId, dispatch, navigate]);
   function toTitleCase(str) {
     if (!str) return str; // Return the input if it's empty or null
   
