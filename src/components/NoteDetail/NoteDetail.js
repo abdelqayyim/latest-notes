@@ -1,45 +1,18 @@
-<<<<<<< HEAD
-import React, { useEffect, useState, useRef } from "react";
-import Styles from "../NoteDetail/NoteDetail.module.css";
-=======
 import React, { useEffect, useRef } from "react";
->>>>>>> a94cd02 (New Admin changes.)
 import Text from "./Text";
 import IMG from "./IMG";
 import { useSelector, useDispatch } from "react-redux";
 import {
-<<<<<<< HEAD
-  updateNote,
-  setCurrentNote,
-  addText,
-  setSpinnerMessage,
-} from "../../redux/dataSlice";
-import LanguageServices from "../../LanguageServices";
-
-=======
   setCurrentNote,
   setSpinnerMessage,
 } from "../../redux/dataSlice";
 import LanguageServices from "../../LanguageServices";
->>>>>>> a94cd02 (New Admin changes.)
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
 import ImageIcon from "@mui/icons-material/Image";
-<<<<<<< HEAD
-import FileCopyIcon from "@mui/icons-material/FileCopyOutlined";
-import SaveIcon from "@mui/icons-material/Save";
-import PrintIcon from "@mui/icons-material/Print";
-import ShareIcon from "@mui/icons-material/Share";
-import AddIcon from "@mui/icons-material/Add";
 import TextFieldsOutlinedIcon from "@mui/icons-material/TextFieldsOutlined";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
-import Spinner from "../../components/Spinner/Spinner";
-import pako from "pako";
-=======
-import TextFieldsOutlinedIcon from "@mui/icons-material/TextFieldsOutlined";
-import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
->>>>>>> a94cd02 (New Admin changes.)
 const NoteDetail = ({ note, setNote }) => {
   const dispatch = useDispatch();
   // const [note, setNote] = useState(useSelector(state => state.languages.currentNote));
@@ -47,12 +20,6 @@ const NoteDetail = ({ note, setNote }) => {
   const selectedLanguageID = useSelector(
     (state) => state.languages.currentLanguageID
   );
-<<<<<<< HEAD
-  const message = useSelector((state) => state.languages.spinnerMessage);
-  const currenState = useSelector((state) => state.languages);
-  let active = message !== "";
-=======
->>>>>>> a94cd02 (New Admin changes.)
   const fileInputRef = useRef(null);
 
   const handleAddCode = () => {

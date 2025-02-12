@@ -1,16 +1,4 @@
 import React, { useState, useEffect } from "react";
-<<<<<<< HEAD
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import { Row, Col, Container } from "react-bootstrap";
-import TextField from "@mui/material/TextField";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import { clearAllListeners } from "@reduxjs/toolkit";
-import LanguageServices from "../../LanguageServices";
-import { useSelector, useDispatch } from "react-redux";
-=======
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Container } from "react-bootstrap";
@@ -18,7 +6,6 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import LanguageServices from "../../LanguageServices";
 import { useSelector} from "react-redux";
->>>>>>> a94cd02 (New Admin changes.)
 import Overlay from "../Overlay/Overlay";
 import CustomDropdown from "../DropDown/CustomDropdown";
 import { useLocation } from "react-router-dom";

@@ -1,19 +1,10 @@
-<<<<<<< HEAD
-import React, {useState} from 'react';
-import { Row, Col } from 'react-bootstrap';
-=======
 import React from 'react';
->>>>>>> a94cd02 (New Admin changes.)
 import { InfoOutlined } from '@mui/icons-material';
 import ReportProblemOutlinedIcon from '@mui/icons-material/ReportProblemOutlined';
 import Button from '@mui/material/Button';
 import Overlay from '../Overlay/Overlay';
 
 const Confirmation = ({ open, isOverlayVisible, onClose, text, onConfirm }) => {
-<<<<<<< HEAD
-    const [isConfirmationOpen, setIsConfirmationOpen] = useState(open);
-=======
->>>>>>> a94cd02 (New Admin changes.)
     // https://mui.com/material-ui/react-alert/
     const option = {
         info: {
@@ -58,16 +49,6 @@ const Confirmation = ({ open, isOverlayVisible, onClose, text, onConfirm }) => {
         flexDirection: "column",
         zIndex: "12", 
     };
-<<<<<<< HEAD
-    const handleCloseConfirmation = () => {
-        setIsConfirmationOpen(false);
-    }
-    const handleConfirmAction = () => {
-        console.log("Hello");
-    }
-=======
-
->>>>>>> a94cd02 (New Admin changes.)
     return (        
         <Overlay isVisible={open} onClose={onClose} isOverlayVisible={isOverlayVisible}>
             <div style={{...style, backgroundColor: option.warning.divColor}} onClick={(e)=>e.stopPropagation()}>

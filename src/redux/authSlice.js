@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { LOGIN, LOGOUT } from './authActions';
-=======
 import { createSlice } from '@reduxjs/toolkit';
->>>>>>> a94cd02 (New Admin changes.)
 
 export const authSlice = createSlice({
   name: 'authentication',
@@ -20,11 +15,7 @@ export const authSlice = createSlice({
   },
   reducers: {
     setState: (state, action) => {
-<<<<<<< HEAD
-      const { firstName, lastName, username, email, isAdmin, userId, accessToken, refreshToken, profilePicture, isAuthenticated } = action.payload;
-=======
       const { firstName, lastName, username, email, isAdmin, userId, accessToken, refreshToken, profilePicture } = action.payload;
->>>>>>> a94cd02 (New Admin changes.)
       state.firstName = firstName;
       state.lastName = lastName;
       state.username = username;
