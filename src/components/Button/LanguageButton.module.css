@@ -1,0 +1,66 @@
+/* *{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+} */
+.link{
+    text-decoration: none;
+}
+.btn{
+    position: relative;
+    margin: 0 5px;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-family:'Bitter', sans-serif;
+    padding: 5px 10px;
+    border: none;
+    background-color:transparent;
+    color: white;
+    transition-timing-function: ease-out;
+    transition-duration: 0.2s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 1px solid  rgb(39,121,167);
+}
+.btn:hover{
+    transform: scale(1.1);
+    border: 1px solid #3898ec;
+    background-color:#3898ec ;
+    color: black;
+}
+.btn.dark{
+    color: white;
+    border: 1px solid white;
+}
+.btn.dark:hover{
+    border: 1px solid #3898ec;
+}
+.btn.selected{
+    transform: scale(1.1);
+    border: 1px solid #3898ec;
+    background-color: #3898ec;
+}
+
+@media screen and (max-width: 480px) {
+    .btn{
+        font-size: 0.5rem;
+    }
+}
+
+/* phone portrait */
+@media screen and (max-width: 500px) {
+    
+}
+/* tablet portrait */
+@media screen and (min-width: 501px) and (max-width: 999px){
+    .btn{
+        margin-bottom: 5px;
+    }
+}
+@media screen and (min-width: 1000px) {
+    .btn{
+        margin-bottom: 5px;
+    }
+}

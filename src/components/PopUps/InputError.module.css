@@ -1,0 +1,38 @@
+.parent-div{
+    height: 50px;
+    width: 300px;
+    position: fixed;
+    bottom: 0;
+    background-color:white;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px;
+    transform: translateY(150%);
+    transition: transform 0.5s ease-in; /* Use CSS transitions */
+}
+.parent-div.active{
+    transform: translateY(0%);
+}
+
+.logo{
+    width:20%;
+    height: 100%;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.message{
+    flex: 1;
+    height: 100%;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
