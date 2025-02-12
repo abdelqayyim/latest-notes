@@ -33,12 +33,9 @@
 .sidebar ul{
     list-style: none;
 }
-<<<<<<< HEAD
-=======
 .logo{
     cursor: pointer;
 }
->>>>>>> a94cd02 (New Admin changes.)
 .sidebar > ul > li:first-child{
     display: flex;
     justify-content: flex-end;
