@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useEffect, useState, useImperativeHandle, forwardRef } from 'react'; 
+=======
+import React, {useState, forwardRef } from 'react'; 
+>>>>>>> a94cd02 (New Admin changes.)
 import NoteDetailTag from './NoteDetailTag';
 import Editor from '@monaco-editor/react';
 import CloseIcon from '@mui/icons-material/Close';
@@ -52,7 +56,11 @@ const Text = forwardRef(({ detail, index, removeElement, moveElement }, ref) => 
         <CloseIcon onClick={() => removeElement(index)} style={{cursor:"pointer"}} />
 
         <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent: "center"}}>
+<<<<<<< HEAD
           {index != 0 && <div onMouseDown={moveHandler} className={styles.textUpBtn}><span class="material-symbols-outlined">expand_less</span></div>}
+=======
+          {index !== 0 && <div onMouseDown={moveHandler} className={styles.textUpBtn}><span class="material-symbols-outlined">expand_less</span></div>}
+>>>>>>> a94cd02 (New Admin changes.)
           <NoteDetailTag options={supportedLanguageList} currentLanguage={language} />
         </div>
         

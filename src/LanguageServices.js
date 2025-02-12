@@ -2,6 +2,15 @@ import { languageApi } from "./APIClient";
 
 const LanguageServices = {
   getAllLanguages: async () => {
+        try {
+          const response = await languageApi.get("/all");
+          return response.data;
+        } catch (error) {
+          console.error("Error fetching all languages", error);
+          throw error;
+        }
+      },
+  getAllUserLanguages: async () => {
     try {
       const response = await languageApi.get("/");
       return response.data;
@@ -15,7 +24,6 @@ const LanguageServices = {
           const response = await languageApi.get(`details`, {
               params: { language_id },
           });
-          console.log(`response.data`,response.data);
           return response.data;
       } catch (error) {
           console.error("Error fetching language details:", error);
@@ -61,11 +69,6 @@ const LanguageServices = {
           if (!requestBody.name) {
               throw new Error("Missing required field: title");
           }
-          // Set the headers for JSON content
-          const headers = {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-          };
           // Make the POST request
           const response = await languageApi.post(`addNewCourse`, requestBody);
 
@@ -102,13 +105,6 @@ const LanguageServices = {
             note_detail,
             note_id
           };
-          // Set the headers, e.g., for JSON and authorization (if needed)
-          const headers = {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            // 'Authorization': `Bearer ${yourAuthToken}`, // Uncomment if you need an auth token
-          };
-
           const response = await languageApi.put('notes/updateNote', requestBody);
 
           // Return the updated note data or a success message

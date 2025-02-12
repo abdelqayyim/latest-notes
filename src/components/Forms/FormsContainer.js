@@ -1,8 +1,15 @@
+<<<<<<< HEAD
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CreateCourseForm from "./CreateCourseForm";
 import CreateNoteForm from "./CreateNoteForm";
 import Confirmation from "../PopUps/Confirmation";
+=======
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import CreateCourseForm from "./CreateCourseForm";
+import CreateNoteForm from "./CreateNoteForm";
+>>>>>>> a94cd02 (New Admin changes.)
 import {
   setCurrentLanguage,
   setSpinnerMessage, 

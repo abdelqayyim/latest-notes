@@ -7,6 +7,7 @@ import {
   setlanguagesList,
   setCurrentLanguage,
 } from "../redux/dataSlice";
+import { VIEW_TYPE, TABS } from "../redux/uiSlice";
 import LanguageFolder from "../components/LanguagesBox/LanguageFolder";
 import styles from "./styles/Home.module.css";
 import LanguageServices from "../LanguageServices";
@@ -27,16 +28,17 @@ export default function Home() {
   const [rows, setRows] = useState([]);
   const [openDelete, setOpenDelete] = useState(false);
   const [selectedRow, setSelectedRow] = useState(undefined);
-
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedId, setSelectedId] = useState(null);
   const isDataFetched = useRef(false); // Track if data has been fetched
+  const displayType = useSelector((state) => state.ui.view);
+  const currentTab = useSelector((state) => state.ui.currentTab);
 
-const handleMenuClick = (event, row) => {
-  setAnchorEl(event.currentTarget);
-  setSelectedId(row.id);
-  setSelectedRow(row);
-};
+  const handleMenuClick = (event, row) => {
+    setAnchorEl(event.currentTarget);
+    setSelectedId(row.id);
+    setSelectedRow(row);
+  };
 
   const handleMenuClose = () => {
     setAnchorEl(null);
@@ -72,9 +74,11 @@ const handleMenuClick = (event, row) => {
       renderCell: (params) => (
         <>
           <IconButton onClick={(event) => {
-          event.stopPropagation(); // Prevents onRowClick from firing
-          handleMenuClick(event, params.row);
-        }}>
+            event.stopPropagation(); // Prevents onRowClick from firing
+            handleMenuClick(event, params.row);
+            }}
+            sx={{color:"white"}}
+          >
             <MoreVertIcon />
           </IconButton>
           <Menu
@@ -100,40 +104,67 @@ const handleMenuClick = (event, row) => {
   const paginationModel = { page: 0, pageSize: 5 };
 
   const fetchData = async () => {
-    dispatch(setSpinnerMessage("Loading Language"));
-    try {
-      const data = await LanguageServices.getAllLanguages();
-      setCurrList(data);
-      dispatch(setSpinnerMessage(""));
-      dispatch(setlanguagesList(data));
-      dispatch(setValue(data));
-      return data;
-    } catch (error) {
-      dispatch(setErrorMessage({ message: `${error}`, sign: "negative" }));
-    } finally {
-      dispatch(setSpinnerMessage(""));
+    switch (currentTab) {
+      case TABS.MY_NOTES:
+        dispatch(setSpinnerMessage("Loading Language"));
+        try {
+          const data = await LanguageServices.getAllUserLanguages();
+          setCurrList(data);
+          dispatch(setSpinnerMessage(""));
+          dispatch(setlanguagesList(data));
+          dispatch(setValue(data));
+          return data;
+        } catch (error) {
+          dispatch(setErrorMessage({ message: `${error}`, sign: "negative" }));
+        } finally {
+          dispatch(setSpinnerMessage(""));
+        }
+        break;
+      case "All":
+        dispatch(setSpinnerMessage("Loading Language"));
+        try {
+          const data = await LanguageServices.getAllLanguages();
+          setCurrList(data);
+          dispatch(setSpinnerMessage(""));
+          dispatch(setlanguagesList(data));
+          dispatch(setValue(data));
+          return data;
+        } catch (error) {
+          dispatch(setErrorMessage({ message: `${error}`, sign: "negative" }));
+        } finally {
+          dispatch(setSpinnerMessage(""));
+        }
+        break
+      default:
+        break;
     }
+    
   };
 
   useEffect(() => {
     if (!isDataFetched.current) {
         fetchData();
       isDataFetched.current = true;
+    } else {
+      fetchData();
     }
-  }, []);
+  }, [currentTab]);
+
   useEffect(() => {
     setCurrList(currentLanguages);
     setRows(prev => currentLanguages.map(language => ({
-      id: language._id,
-      title: language.name,
-      owner: `${language.createdBy.firstName} ${language.createdBy.lastName}`,
-      email: language.createdBy.email,
-      lastEdited: new Date(language.lastEdited).toLocaleDateString("en-US", {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-    })
+      id: language._id ?? "Unknown",
+      title: language.name ?? "Unknown",
+      owner: `${language.createdBy?.firstName ?? "Unknown"} ${language.createdBy?.lastName ?? "Unknown"}`,
+      email: language.createdBy?.email ?? "Unknown",
+      lastEdited: language.lastEdited 
+        ? new Date(language.lastEdited).toLocaleDateString("en-US", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+          })
+        : "Unknown"
     })));
   }, [currentLanguages]);
 
@@ -152,17 +183,6 @@ const handleMenuClick = (event, row) => {
         alignItems: "center",
       }}
     >
-      {
-        <div style={{display:"flex", flexDirection: "row", alignItems:"center", justifyContent: "center", gap:"10px"}}>
-          <div className={styles["typewriter"]}>
-            <h1>My Notes</h1>
-          </div>
-          <div onClick={()=>setIsTableView(prev=>!prev)}>
-            {isTableView?  Icons.GRID_VIEW: Icons.TABLE_VIEW}
-          </div>
-        </div>
-      }
-
       <div className={`${styles["languages-box"]}`}>
         {
           currList.length === 0 ? (
@@ -176,7 +196,7 @@ const handleMenuClick = (event, row) => {
             }}>
               <p>No courses created</p>
             </div>
-          ) : isTableView ? 
+          ) : displayType === VIEW_TYPE.GRID ? 
           [...currList].reverse().map((language) => {
             return (
               <LanguageFolder
@@ -226,10 +246,6 @@ const handleMenuClick = (event, row) => {
               }}
             />
           </Paper>
-
-
-
-        
         }
       </div>
       {

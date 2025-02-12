@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom';
 import styles from './styles/Layout.module.css';
 import FormsContainer from '../components/Forms/FormsContainer';
 import { useSelector } from 'react-redux';
+<<<<<<< HEAD
 
 const Layout = () => {
   const isAuthenticated = useSelector((state) => state.authentication.isAuthenticated);
@@ -26,6 +27,25 @@ const Layout = () => {
   )
   
   
+=======
+import Navbar from './Navbar';
+
+const Layout = () => {
+  const isAuthenticated = useSelector((state) => state.authentication.isAuthenticated);
+
+  return (
+    <div className={styles.body}>
+      {isAuthenticated && <Sidebar />}
+      <main className={styles.main}>
+        <Navbar />
+        <FormsContainer />
+        <div className={styles.outletContainer}>
+          <Outlet />
+        </div>
+      </main>
+    </div>
+  );
+>>>>>>> a94cd02 (New Admin changes.)
 };
 
 export default Layout;

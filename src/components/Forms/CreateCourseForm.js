@@ -7,19 +7,21 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import LanguageServices from "../../LanguageServices";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setValue,
   setSpinnerMessage,
   setErrorMessage,
   setlanguagesList,
-  setCurrentLanguage, } from "../../redux/dataSlice";
+  } from "../../redux/dataSlice";
+import { setTab, TABS } from "../../redux/uiSlice";
+import { useNavigate } from "react-router-dom";
+import { customEncodeURI } from "../../utilFunctions";
 
 const CreateCourseForm = ({ open, onClose }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
-  const currentLanguages = useSelector(
-    (state) => state.languages.languagesList
-  );
+
   const style = {
     position: "absolute",
     top: "50%",
@@ -34,7 +36,8 @@ const CreateCourseForm = ({ open, onClose }) => {
   const fetchData = async () => {
     dispatch(setSpinnerMessage("Loading Language"));
     try {
-      const data = await LanguageServices.getAllLanguages();
+      dispatch(setTab(TABS.MY_NOTES));
+      const data = await LanguageServices.getAllUserLanguages();
       dispatch(setSpinnerMessage(""));
       dispatch(setlanguagesList(data));
       dispatch(setValue(data));
@@ -47,11 +50,9 @@ const CreateCourseForm = ({ open, onClose }) => {
 
   const handleCreateCourse = async () => {
     try {
-      console.log("Creating COurse");
-      let response = await LanguageServices.addNewCourse({ name: title });
-      console.log("About to refetch");
-      await fetchData();
-      console.log("Done refetching");
+      await LanguageServices.addNewCourse({ name: title });
+      let newCourse = await fetchData();
+      navigate(`/${customEncodeURI(newCourse[0].name)}`);
       onClose();
     } catch (error) {
       throw new Error("Unable to create new Course");

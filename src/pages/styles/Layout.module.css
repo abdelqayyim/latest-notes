@@ -6,6 +6,15 @@
     --accent-clr: #5e63ff;
     --secondary-text-clr: #b0b3c1;
 }
+<<<<<<< HEAD
+=======
+html, body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; 
+}
+>>>>>>> a94cd02 (New Admin changes.)
 
 .body{
     min-height: 100vh;
@@ -14,4 +23,23 @@
     color: var(--text-clr);
     display: grid;
     grid-template-columns: auto 1fr;
+<<<<<<< HEAD
+=======
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.outletContainer {
+    flex: 1;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+>>>>>>> a94cd02 (New Admin changes.)
 }

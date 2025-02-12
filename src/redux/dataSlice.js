@@ -119,7 +119,11 @@ export const dataSlice = createSlice({
             state.loading = LOADING_STATE.SUCCEEDED;
             state.value = action.payload;
             state.currentNotes = action.payload.map((lang) => {
+<<<<<<< HEAD
                 if (lang._id == state.currentLanguageID) {
+=======
+                if (lang._id === state.currentLanguageID) {
+>>>>>>> a94cd02 (New Admin changes.)
                     return lang.notes;
                 }
             })
@@ -264,7 +268,11 @@ const addLanguage = createAsyncThunk(
             if (languageExists(language, languages)) {
                 throw new Error("Language Already exists"); 
             }
+<<<<<<< HEAD
             const response = await fetch(URL + `${language}`, {
+=======
+            await fetch(URL + `${language}`, {
+>>>>>>> a94cd02 (New Admin changes.)
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -286,7 +294,11 @@ const addNote = createAsyncThunk( //receives only the note
         const currentLanguageID = state.languages.currentLanguageID;
         try {
             //check to see if title already exists
+<<<<<<< HEAD
             const response = await fetch(URL + `${currentLanguageID}/newNote`, {
+=======
+            await fetch(URL + `${currentLanguageID}/newNote`, {
+>>>>>>> a94cd02 (New Admin changes.)
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -308,7 +320,11 @@ const deleteNote = createAsyncThunk( //receives only the note
         const currentLanguageID = getState().languages.currentLanguageID;
         try {
             //check to see if title already exists
+<<<<<<< HEAD
             const response = await fetch(URL +`${currentLanguageID}/deleteNote`, {
+=======
+            await fetch(URL +`${currentLanguageID}/deleteNote`, {
+>>>>>>> a94cd02 (New Admin changes.)
                 method: 'DELETE',
                 headers: {
                     'Accept': 'application/json',
@@ -359,7 +375,11 @@ const saveNote = createAsyncThunk( //receives only the note
         }
         try {
             //check to see if title already exists
+<<<<<<< HEAD
             const response = await fetch(URL +`${currentLanguageID}/updateNote`, {
+=======
+            await fetch(URL +`${currentLanguageID}/updateNote`, {
+>>>>>>> a94cd02 (New Admin changes.)
                 method: 'PUT',
                 headers: {
                     'Accept': 'application/json',
@@ -383,7 +403,11 @@ const deleteLanguage = createAsyncThunk(
         const state = getState();
         const languages = state.languages.value;
         const l = state.languages.value.filter(lang => {
+<<<<<<< HEAD
             return lang.name.toLowerCase() == language
+=======
+            return lang.name.toLowerCase() === language
+>>>>>>> a94cd02 (New Admin changes.)
         });
         try {
             if (!languageExists(language, languages)) {

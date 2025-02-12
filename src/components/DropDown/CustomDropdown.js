@@ -9,10 +9,13 @@ const CustomDropdown = ({options}) => {
 
   const toggleDropdown = () => setIsOpen((prev) => !prev);
 
+<<<<<<< HEAD
   const handleSelect = (option) => {
     setSelectedValue(option);
     setIsOpen(false);
   };
+=======
+>>>>>>> a94cd02 (New Admin changes.)
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {

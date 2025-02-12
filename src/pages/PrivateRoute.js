@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, {useEffect, useState} from 'react'
+=======
+import React, {useEffect} from 'react'
+>>>>>>> a94cd02 (New Admin changes.)
 import {useSelector} from "react-redux"
 import { Navigate, useLocation } from "react-router-dom";
 import { setState } from '../redux/authSlice';
@@ -6,12 +10,15 @@ import { useDispatch } from 'react-redux';
 
 const PrivateRoute = ({ children }) => {
     const dispatch = useDispatch();
+<<<<<<< HEAD
     const authenticationStatus = useSelector((state) => state.authentication.isAuthenticated);
     const [isAuthentication, setIsAuthenticated] = useState(authenticationStatus);
 
     useEffect(() => {
         setIsAuthenticated(authenticationStatus);
     }, [authenticationStatus]);
+=======
+>>>>>>> a94cd02 (New Admin changes.)
 
     useEffect(() => {
         const accessToken = localStorage.getItem("reactNotes-accessToken");
@@ -31,7 +38,11 @@ const PrivateRoute = ({ children }) => {
                 refreshToken: localStorage.getItem("reactNotes-refreshToken")
             }))
         }
+<<<<<<< HEAD
     }, []);
+=======
+    }, [dispatch]);
+>>>>>>> a94cd02 (New Admin changes.)
 
     const user = useSelector((state) => state.authentication);
     let location = useLocation();

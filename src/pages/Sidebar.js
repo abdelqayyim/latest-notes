@@ -6,10 +6,8 @@ import {
   FORMS,
 } from "../redux/dataSlice";
 import { Link } from "react-router-dom";
-import Icons from '../pages/icons/Icons';
-import { logout } from '../redux/authSlice';
 import Tooltip from '@mui/material/Tooltip';
-
+import logo from './favicon-32x32.png';
 const Sidebar = (props) => {
   // before the sidebar languages are display, the data is already fetched no need to do it again
   const dispatch = useDispatch();
@@ -57,7 +55,9 @@ const Sidebar = (props) => {
     >
       <ul>
         <li>
-          <span className={styles.logo}>LOGO</span>
+          {/* <span className={styles.logo}>LOGO</span> */}
+          <img src={logo} alt="Logo" className={styles.logo} />
+
           <Tooltip title={sideBarOpen?"Close":"Open"} placement="right">
           <button
             className={`${styles["toggle-btn"]} ${styles["rotate"]}`}
@@ -147,7 +147,7 @@ const Sidebar = (props) => {
           </ul>
         </li>
 
-        <li>
+        {/* <li>
           <Tooltip title={sideBarOpen? "":"Account"} placement="right">
             <button className={styles["dropdown-btn"]} onClick={toggleSubMenu}>
               {Icons.ACCOUNT_ICON}
@@ -181,7 +181,7 @@ const Sidebar = (props) => {
               </li>
             </div>
           </ul>
-        </li>
+        </li> */}
       </ul>
     </nav>
   );
