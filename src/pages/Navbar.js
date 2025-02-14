@@ -17,9 +17,11 @@ import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import { toggleView, VIEW_TYPE, TABS, setTab, setSearchString } from '../redux/uiSlice';
 import { logout } from '../redux/authSlice';
-
+import { useLocation, useNavigate } from 'react-router-dom';
 function Navbar() {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const naviagate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -74,6 +76,14 @@ function Navbar() {
     console.log('Search Query:', searchQuery);
     // Add your search logic here
   };
+  const handleNavBarClick = (page) => {
+    if (page !== "View") {
+      dispatch(setTab(page))
+    }
+    if (location.pathname !== "/") {
+      naviagate("/")
+    }
+  }
 
   return (
     <AppBar position="static" sx={{ backgroundColor: 'transparent' }}>
@@ -84,7 +94,7 @@ function Navbar() {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={()=>{handleCloseNavMenu(); if(page !== "View") dispatch(setTab(page)) }}
+                onClick={()=>{handleCloseNavMenu(); handleNavBarClick(page) }}
                     sx={{
                         my: 2,
                         color: 'white',

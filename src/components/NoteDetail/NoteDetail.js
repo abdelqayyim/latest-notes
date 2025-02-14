@@ -151,7 +151,7 @@ const NoteDetail = ({ note, setNote }) => {
       style={{
         marginTop: "10px",
         flexGrow: "1",
-        overflowY: "visible",
+        overflowY: "scroll",
         paddingBottom: "20px",
       }}
     >

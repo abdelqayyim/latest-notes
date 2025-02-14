@@ -45,17 +45,22 @@ const CreateCourseForm = ({ open, onClose }) => {
     } catch (error) {
       dispatch(setErrorMessage({ message: `${error}`, sign: "negative" }));
       throw error;
+    } finally {
+      dispatch(setSpinnerMessage(""));
     }
   };
 
   const handleCreateCourse = async () => {
+    onClose();
+    dispatch(setSpinnerMessage("Adding Language"));
     try {
       await LanguageServices.addNewCourse({ name: title });
       let newCourse = await fetchData();
-      navigate(`/${customEncodeURI(newCourse[0].name)}`);
-      onClose();
+      navigate(`/`);
     } catch (error) {
       throw new Error("Unable to create new Course");
+    } finally {
+      dispatch(setSpinnerMessage(""));
     }
   }
   return (

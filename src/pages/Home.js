@@ -215,7 +215,7 @@ export default function Home() {
               rows={rows}
               columns={columns.map(col => ({ ...col, headerClassName: "custom-header" }))} // ✅ Apply globally
               initialState={{ pagination: { paginationModel } }}
-              pageSizeOptions={[5, 10]}
+              pageSizeOptions={[10, 10]}
               onRowClick={(params) => clickHandler(params.id, params.row.title)}
               sx={{
                 border: 0,
