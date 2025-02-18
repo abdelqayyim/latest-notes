@@ -149,10 +149,11 @@ const NoteDetail = ({ note, setNote }) => {
   return (
     <div
       style={{
-        marginTop: "10px",
-        flexGrow: "1",
-        overflowY: "scroll",
-        paddingBottom: "20px",
+        // marginTop: "10px",
+        // flexGrow: "1",
+        overflowY: "auto",
+        paddingBottom: "100px",
+        height: "calc(100vh - 20px)"
       }}
     >
       {note?.noteDetail?.map((info, index) => {
@@ -180,6 +181,7 @@ const NoteDetail = ({ note, setNote }) => {
           );
         }
       })}
+
       <input
         ref={fileInputRef}
         style={{ visibility: "none", display: "none", position: "absolute" }}
