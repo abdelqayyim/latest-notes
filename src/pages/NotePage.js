@@ -10,6 +10,7 @@ import {
   setCurrentNote,
   setCurrentLanguage,
 } from "../redux/dataSlice";
+import { customDecodeURI } from "../utilFunctions";
 
 const NotePage = (props) => {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ const NotePage = (props) => {
         dispatch(setSpinnerMessage("Loading Details"));
         try {
           const data = await LanguageServices.getNoteByLanguageName(
-            paramLanguageName,
+            customDecodeURI(paramLanguageName),
             noteId
           );
 

@@ -23,6 +23,7 @@ import {
 import { Row } from "react-bootstrap";
 import LanguageServices from "../LanguageServices";
 import NotFound from "./NotFound";
+import { customDecodeURI } from "../utilFunctions";
 
 const LanguagePage = () => {
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ const LanguagePage = () => {
       if (selectedLanguageID) {
         data = await LanguageServices.getLanguageDetails(selectedLanguageID);
       } else {
-        data = await LanguageServices.searchLanguageByName(language);
+        data = await LanguageServices.searchLanguageByName(customDecodeURI(language));
       }
       dispatch(setLanguageDetails(data));
       dispatch(setCurrentLanguage(data._id));

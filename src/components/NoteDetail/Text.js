@@ -52,7 +52,7 @@ const Text = forwardRef(({ detail, index, removeElement, moveElement }, ref) => 
         <CloseIcon onClick={() => removeElement(index)} style={{cursor:"pointer"}} />
 
         <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent: "center"}}>
-          {index !== 0 && <div onMouseDown={moveHandler} className={styles.textUpBtn}><span class="material-symbols-outlined">expand_less</span></div>}
+          {index !== 0 && <div onMouseDown={moveHandler} className={styles.textUpBtn}><span className="material-symbols-outlined">expand_less</span></div>}
           <NoteDetailTag options={supportedLanguageList} currentLanguage={language} />
         </div>
         
@@ -60,14 +60,14 @@ const Text = forwardRef(({ detail, index, removeElement, moveElement }, ref) => 
       <div style={{  }}>
         <Editor
           height={`${editorHeight}px`}
-          language={language}
+          // language={language}
           theme="vs-dark"
           value={code}
-          onChange={handleEditorChange}
+          // onChange={handleEditorChange}
           options={{
             scrollBeyondLastLine: false,
             minimap: { enabled: false },
-            automaticLayout: true,
+            // automaticLayout: true,
             readOnly: false,
             scrollbar: {
               // vertical: "hidden", // Hide Monaco's vertical scrollbar
@@ -76,10 +76,10 @@ const Text = forwardRef(({ detail, index, removeElement, moveElement }, ref) => 
             },
             overviewRulerLanes: 0, // Hide the overview ruler
           }}
-          onMount={(editor) => {
-            adjustEditorHeight(editor);
-            editor.onDidChangeModelContent(() => adjustEditorHeight(editor));
-          }}
+          // onMount={(editor) => {
+          //   adjustEditorHeight(editor);
+          //   editor.onDidChangeModelContent(() => adjustEditorHeight(editor));
+          // }}
         />
       </div>
     </div>
