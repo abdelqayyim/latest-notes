@@ -27,7 +27,7 @@ const Text = forwardRef(({ detail, index, removeElement, moveElement }, ref) => 
 
   const adjustEditorHeight = (editor) => {
     const lineCount = editor.getModel().getLineCount();
-    const newHeight = Math.min(lineCount * lineHeight, 400);
+    const newHeight = Math.max(lineCount * lineHeight, 400);
     setEditorHeight(newHeight);
   };
 
@@ -57,7 +57,7 @@ const Text = forwardRef(({ detail, index, removeElement, moveElement }, ref) => 
         </div>
         
       </div>
-      <div style={{ flexGrow: "1", overflow: "hidden", maxHeight: "400px" }}>
+      <div style={{  }}>
         <Editor
           height={`${editorHeight}px`}
           language={language}
@@ -69,6 +69,12 @@ const Text = forwardRef(({ detail, index, removeElement, moveElement }, ref) => 
             minimap: { enabled: false },
             automaticLayout: true,
             readOnly: false,
+            scrollbar: {
+              // vertical: "hidden", // Hide Monaco's vertical scrollbar
+              horizontal: "hidden", // Hide Monaco's horizontal scrollbar
+              alwaysConsumeMouseWheel:false
+            },
+            overviewRulerLanes: 0, // Hide the overview ruler
           }}
           onMount={(editor) => {
             adjustEditorHeight(editor);
