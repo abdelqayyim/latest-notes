@@ -13,9 +13,9 @@ import SpeedDialAction from "@mui/material/SpeedDialAction";
 import ImageIcon from "@mui/icons-material/Image";
 import TextFieldsOutlinedIcon from "@mui/icons-material/TextFieldsOutlined";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
+
 const NoteDetail = ({ note, setNote }) => {
   const dispatch = useDispatch();
-  // const [note, setNote] = useState(useSelector(state => state.languages.currentNote));
   const refs = useRef([]); // Single ref object to hold all refs
   const selectedLanguageID = useSelector(
     (state) => state.languages.currentLanguageID
@@ -23,7 +23,6 @@ const NoteDetail = ({ note, setNote }) => {
   const fileInputRef = useRef(null);
 
   const handleAddCode = () => {
-    // Make the changes in the currentNote, and use this same currentNote for the update
     const updatedNoteDetail = note?.noteDetail
       ? [
           ...note.noteDetail,
@@ -34,12 +33,12 @@ const NoteDetail = ({ note, setNote }) => {
     setNote(newNote);
     dispatch(setCurrentNote(newNote));
   };
+
   const handleSaveNote = async () => {
     try {
       dispatch(setSpinnerMessage("Saving Note"));
       let newNoteDetail = [];
       refs.current.forEach((ref) => {
-        // send the updated noteDetail in the request
         newNoteDetail.push(ref.current);
       });
       const response = await LanguageServices.updateNote({
@@ -61,12 +60,11 @@ const NoteDetail = ({ note, setNote }) => {
 
   const moveElement = (index) => {
     if (index <= 0 || !note?.noteDetail || index >= note.noteDetail.length)
-      return; // Prevent invalid moves
+      return;
 
     let tempNoteDetail = [...note.noteDetail];
     let tempRefs = [...refs.current];
 
-    // Swap the current element with the previous one
     [tempNoteDetail[index - 1], tempNoteDetail[index]] = [
       tempNoteDetail[index],
       tempNoteDetail[index - 1],
@@ -76,30 +74,29 @@ const NoteDetail = ({ note, setNote }) => {
       tempRefs[index - 1],
     ];
 
-    // Update state and refs
     setNote((prev) => ({ ...prev, noteDetail: tempNoteDetail }));
-    refs.current = tempRefs; // Update refs array
+    refs.current = tempRefs;
   };
 
   const handleAddImage = async (event) => {
-    const file = event.target.files[0]; // Access the first (and only) file
+    const file = event.target.files[0];
     if (!file) return;
 
     const reader = new FileReader();
 
     reader.onload = (event) => {
-      const uploadedImage = event.target.result; // Get the image data (base64 string)
+      const uploadedImage = event.target.result;
 
       const updatedNoteDetail = note?.noteDetail
         ? [...note.noteDetail, { type: "img", content: uploadedImage }]
         : [{ type: "img", content: uploadedImage }];
       const newNote = { ...note, noteDetail: updatedNoteDetail };
 
-      setNote(newNote); // Update the local state
-      dispatch(setCurrentNote(newNote)); // Dispatch to update the global state
+      setNote(newNote);
+      dispatch(setCurrentNote(newNote));
     };
 
-    reader.readAsDataURL(file); // Start reading the file
+    reader.readAsDataURL(file);
   };
 
   const actions = [
@@ -122,11 +119,9 @@ const NoteDetail = ({ note, setNote }) => {
 
   useEffect(() => {
     if (note?.noteDetail) {
-      // this will only go through for new elements added
-      // Initialize refs for each item in noteDetail
       note.noteDetail.forEach((n, index) => {
         if (!refs.current[index]) {
-          refs.current[index] = React.createRef(); // Dynamically create refs
+          refs.current[index] = React.createRef();
           refs.current[index].current = n;
         }
       });
@@ -134,14 +129,10 @@ const NoteDetail = ({ note, setNote }) => {
   }, [note]);
 
   const removeElement = (index) => {
-    // Switch the temporary with the one saved in the redux slice
-    // Then change the state so that the ui update
     let temp = [...note.noteDetail];
     temp.splice(index, 1);
-    // changeNoteDetail(temp);
-    // Remove the element from the ref.current array
     if (refs.current && refs.current.length > index) {
-      refs.current.splice(index, 1); // Modify the ref directly
+      refs.current.splice(index, 1);
     }
     setNote((prev) => ({ ...note, noteDetail: temp }));
   };
@@ -149,11 +140,11 @@ const NoteDetail = ({ note, setNote }) => {
   return (
     <div
       style={{
-        // marginTop: "10px",
-        // flexGrow: "1",
-        overflowY: "auto",
+        position: "relative",
+        overflowY: "scroll",
         paddingBottom: "100px",
-        height: "calc(100vh - 20px)"
+        height: "calc(100vh - 20px)",
+        width: "100%",
       }}
     >
       {note?.noteDetail?.map((info, index) => {
@@ -189,19 +180,17 @@ const NoteDetail = ({ note, setNote }) => {
         accept="image/*,image/gif"
         onChange={handleAddImage}
       />
+
+      {/* SpeedDial Container */}
       <div
         style={{
-          height: "0px", // Just make it real small and only the speed dial will show
-          width: "0px",
-          display: "flex",
-          position: "absolute",
-          right: "0",
-          bottom: "0",
+          position: "fixed", // Use fixed positioning to ensure it stays in view
+          bottom: "16px", // Adjust as needed
+          right: "16px", // Adjust as needed
         }}
       >
         <SpeedDial
           ariaLabel="SpeedDial basic example"
-          sx={{ position: "absolute", bottom: 16, right: 16 }}
           icon={<SpeedDialIcon />}
         >
           {actions.map((action) => (

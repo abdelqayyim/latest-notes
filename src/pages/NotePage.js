@@ -80,6 +80,7 @@ const NotePage = (props) => {
           width: "100%",
           height: "50px",
           fontSize: "32px",
+          marginRight:"10px"
         }}
       >
         {toTitleCase(languageName)} - {toTitleCase(note?.title)}
