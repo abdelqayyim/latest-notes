@@ -23,12 +23,22 @@ const NoteDetail = ({ note, setNote }) => {
   const fileInputRef = useRef(null);
 
   const handleAddCode = () => {
+    // Capture the current content of all refs
     const updatedNoteDetail = note?.noteDetail
-      ? [
-          ...note.noteDetail,
-          { type: "text", content: "Write code here", language: "javascript" },
-        ]
-      : [{ type: "text", content: "", language: "javascript" }];
+    ? note.noteDetail.map((detail, index) => {
+        if (detail.type === "text" && refs.current[index]) {
+          return { ...detail, content: refs.current[index].current.content };
+        }
+        return detail;
+      })
+    : [];
+
+    // Add the new default code block
+    updatedNoteDetail.push({
+      type: "text",
+      content: "Write code here",
+      language: "javascript",
+    });
     let newNote = { ...note, noteDetail: updatedNoteDetail };
     setNote(newNote);
     dispatch(setCurrentNote(newNote));
@@ -41,6 +51,7 @@ const NoteDetail = ({ note, setNote }) => {
       refs.current.forEach((ref) => {
         newNoteDetail.push(ref.current);
       });
+      console.log(`newNoteDetail`,newNoteDetail);
       const response = await LanguageServices.updateNote({
         language_id: selectedLanguageID,
         title: note.title,

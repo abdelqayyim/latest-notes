@@ -5,6 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import styles from './Text.module.css';
 
 const Text = forwardRef(({ detail, index, removeElement, moveElement }, ref) => {
+  // const [code, setCode] = useState(ref.current[index]?.current.contentm || "Write Code Here");
   const [code, setCode] = useState(detail?.content);
   const [language, setLanguage] = useState(detail?.language || 'javascript');
   const [editorHeight, setEditorHeight] = useState('70'); // Initial height
@@ -96,7 +97,6 @@ const Text = forwardRef(({ detail, index, removeElement, moveElement }, ref) => 
         display:"inline-block",
         minHeight: `${Number(editorHeight) + 50}px`, // Set a fixed height for the parent container
       }}
-      onClick={() => { console.log("clicked", editorHeight)}}
     >
       <div
         style={{
@@ -104,7 +104,6 @@ const Text = forwardRef(({ detail, index, removeElement, moveElement }, ref) => 
           height: '25px',
           display: 'flex',
           justifyContent: 'space-between',
-          padding: '0 15px',
           width: '100%',
         }}
       >
