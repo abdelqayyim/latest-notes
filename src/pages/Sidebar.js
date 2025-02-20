@@ -8,6 +8,7 @@ import {
 import { Link } from "react-router-dom";
 import Tooltip from '@mui/material/Tooltip';
 import logo from './favicon-32x32.png';
+import { setPageNotFound } from "../redux/dataSlice";
 const Sidebar = (props) => {
   // before the sidebar languages are display, the data is already fetched no need to do it again
   const dispatch = useDispatch();
@@ -77,7 +78,7 @@ const Sidebar = (props) => {
           </Tooltip>
         </li>
 
-        <li className={styles["active"]}>
+        <li className={styles["active"]} onClick={() => { dispatch(setPageNotFound(false))}}>
           
           <Tooltip title={sideBarOpen?"":"Home"} placement={"right"}>
             <Link to="/">

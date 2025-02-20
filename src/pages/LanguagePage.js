@@ -52,6 +52,7 @@ const LanguagePage = () => {
     } catch (error) {
       dispatch(setErrorMessage({ message: `${error}`, sign: "negative" }));
       if (!data) {
+        console.log("data not found");
         dispatch(setPageNotFound(true));
       }
     } finally {

@@ -18,6 +18,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { toggleView, VIEW_TYPE, TABS, setTab, setSearchString } from '../redux/uiSlice';
 import { logout } from '../redux/authSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { setPageNotFound } from '../redux/dataSlice';
 function Navbar() {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -94,7 +95,7 @@ function Navbar() {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={()=>{handleCloseNavMenu(); handleNavBarClick(page) }}
+                onClick={() => { handleCloseNavMenu(); handleNavBarClick(page); dispatch(setPageNotFound(false)) }}
                     sx={{
                         my: 2,
                         color: 'white',

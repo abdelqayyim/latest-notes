@@ -20,8 +20,10 @@ const LanguageFolder = (props) => {
 
 
   const clickHandler = (id) => {
+    console.log(`here`, id);
+
     dispatch(setCurrentLanguage(id));
-    navigate(`/${customEncodeURI(path)}`); // Use navigate instead of router.push
+    navigate(`/${path}`); 
   };
 
   const handleDeleteLanguage = async () => {
