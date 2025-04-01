@@ -36,7 +36,7 @@ const LanguagePage = () => {
   useEffect(() => {
     setNoteEntity(languageDetails);
   }, [languageDetails]);  
-
+  console.log("HERE-----", language);
   const fetchData = async () => {
     dispatch(setSpinnerMessage("Loading Notes"));
     let data;

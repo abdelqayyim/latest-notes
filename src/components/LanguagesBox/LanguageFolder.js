@@ -23,7 +23,7 @@ const LanguageFolder = (props) => {
     console.log(`here`, id);
 
     dispatch(setCurrentLanguage(id));
-    navigate(`/${path}`); 
+    navigate(`/${customEncodeURI(path)}`); 
   };
 
   const handleDeleteLanguage = async () => {

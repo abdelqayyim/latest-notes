@@ -24,7 +24,7 @@ const NotePage = (props) => {
   const [note, setNote] = useState(
     useSelector((state) => state.languages.currentNote)
   );
-
+  console.log("HERE----", paramLanguageName);
   useEffect(() => {
     if (!languageName) {
       // If the value is not already loaded
